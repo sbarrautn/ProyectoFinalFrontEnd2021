@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+
+    <div class="conteiner-fluid"> 
+      <!--BARRA DE NAVEGACIÓN-->
+
+    </div>
+
+
+
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
