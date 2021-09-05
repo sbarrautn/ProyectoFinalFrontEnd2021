@@ -1,6 +1,6 @@
 # front_end
 
-> Proyecto_Final
+> ProyectoFinal
 
 ## Build Setup
 
