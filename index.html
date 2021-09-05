@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>front_end</title>
+
+
+
+    <!-- Cargue Bootstrap y BootstrapVue CSS requeridos --> 
+<link  type = "text / css"  rel = "stylesheet"  href = "//unpkg.com/bootstrap /dist/css/bootstrap.min.css "/> 
+<link  type = " text / css "  rel = " stylesheet "  href = " //unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min. css "/> 
+
+<!-- Cargue polyfills para admitir navegadores más antiguos--> 
+<script  src = " //polyfill.io/v3/polyfill.min.js? features = es2015% 2CIntersectionObserver "  crossorigin= "anónimo"></script> 
+
+<!--Cargar Vue seguido de BootstrapVue--> 
+<script  src="//unpkg.com/vue@latest/dist/vue.min.js"></script> 
+<script  src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script> 
+
+<!--Cargue lo siguiente para el soporte de BootstrapVueIcons--> 
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+
+
+
   </head>
   <body>
+    <div class="conteiner-fluid">
+      <!-- BARRA DE NAVEGACIÓN -->
+      <nav class="navbar navbar-expand-md navbar-light bg-light border-3 border-bottom border-primary">
+          <div class="conteiner-fluid">
+            <a href="#" class="navbar-brand"> Prototipo de Plataforma </a>
+            <button>
+              <h2>
+                AR
+              </h2>
+            </button>
+          </div>
+      </nav>
+    
+    </div>
+
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
