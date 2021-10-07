@@ -1,21 +1,14 @@
-# front_end
+# DOCKER FOR PROYECTO APP - FRONTEND #
 
-> ProyectoFinal
+## Instrucciones para levantar el frontend ##
 
-## Build Setup
+Si es la primera vez que se van a levantar los contenedores, se deben seguir los siguientes pasos:
 
-``` bash
-# install dependencies
-npm install
+1.- Clonar este repositorio en la carpeta correspondiente al contenedor WEB.
+2.- Levantar los contenedores con *docker-compose up -d*
 
-# serve with hot reload at localhost:8080
-npm run dev
+Si se quiere realizar un cambio en el código y se necesita volver a compilar el frontend en un ambiente con contenedores activos, se deben seguir los siguentes pasos:
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+1.- Clonar la última versión de este repositorio en la carpeta correspondiente al contenedor WEB.
+2.- Reconstruir el contenedor WEB con el siguiente comando *docker-compose build web**
+3.- Actualizar contenedor web con *docker-compose up -d*
