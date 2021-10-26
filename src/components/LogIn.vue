@@ -195,13 +195,28 @@ export default {
       console.log(this.email)
       console.log(this.password)
 
+      //testing with 3rd party api
       /*axios
         .get('https://api.coindesk.com/v1/bpi/currentprice.json')
         .then(response => (this.info = response))*/
 
-      axios
+      //testing GET request with ping action
+      /*axios
         .get('http://api.proyecto.test/api/ping')
-        .then(response => (this.info = response))
+        .then(response => (this.info = response))*/
+
+      //testing POST request with login endpoint
+      axios.post('http://api.proyecto.test/api/login', {
+        email: this.email,
+        password: this.password
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     }
   }
 }
