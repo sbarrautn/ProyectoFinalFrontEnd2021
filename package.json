@@ -16,7 +16,7 @@
     "jquery": "^3.6.0",
     "portal-vue": "^2.1.7",
     "vue": "^2.6.14",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.5.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
