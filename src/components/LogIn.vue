@@ -152,6 +152,9 @@ input:focus{
 .links{
   color: white;
 }
+.links{
+  color: white;
+}
 
 .links a{
   margin-left: 4px;
