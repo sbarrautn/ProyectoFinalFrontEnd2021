@@ -25,7 +25,7 @@
       <b-row class="justify-content-center">
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
-            <b-card-header class="bg-transparent pb-5"  >
+            <b-card-header class="bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">
                 <a href="#" class="btn btn-neutral btn-icon">
@@ -85,20 +85,40 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        model: {
-          email: '',
-          password: '',
-          rememberMe: false
-        }
-      };
-    },
-    methods: {
-      onSubmit() {
-        // this will be called only after form is valid. You can do api call here to login
+import router from "../../routes/router";
+
+export default {
+  data() {
+    return {
+      model: {
+        email: '',
+        password: '',
+        rememberMe: false
       }
+    };
+  },
+  methods: {
+    onSubmit() {
+      // this will be called only after form is valid. You can do api call here to login
+
+      axios.post('http://api.proyecto.test/api/login', {
+        email: this.model.email,
+        password: this.model.password
+      })
+        .then(function (response) {
+          var tokenHash = response.data.data.hash;
+          localStorage.setItem('token', tokenHash);
+
+          console.log(localStorage.getItem('token'));
+          console.log(response);
+
+          router.go({ name: '/#/dashboard' });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     }
-  };
+  }
+};
 </script>
