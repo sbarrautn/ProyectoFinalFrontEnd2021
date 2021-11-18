@@ -106,13 +106,10 @@ export default {
         password: this.model.password
       })
         .then(function (response) {
-          var tokenHash = response.data.data.hash;
-          localStorage.setItem('token', tokenHash);
+          var sessionHash = response.data.data.hash;
+          localStorage.setItem('session', sessionHash);
 
-          console.log(localStorage.getItem('token'));
-          console.log(response);
-
-          router.go({ name: '/#/dashboard' });
+          router.push({ name: 'dashboard' });
         })
         .catch(function (error) {
           console.log(error);
