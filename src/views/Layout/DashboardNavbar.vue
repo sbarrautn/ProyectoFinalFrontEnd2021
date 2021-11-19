@@ -66,7 +66,7 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item href="#!">
+          <b-dropdown-item v-on:click="logOut" href="#!">
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
           </b-dropdown-item>
@@ -79,6 +79,7 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
+import router from "../../routes/router";
 
 export default {
   components: {
@@ -116,6 +117,23 @@ export default {
     },
     closeDropDown() {
       this.activeNotifications = false;
+    },
+    logOut() {
+      const session = localStorage.getItem('session');
+      axios.post('http://api.proyecto.test/api/logout', null, {
+        headers: {
+          'Authorization': `Basic ${session}`
+        }
+      })
+        .then(function (response) {
+          localStorage.removeItem('session');
+
+          router.push({ name: 'login' });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     }
   }
 };

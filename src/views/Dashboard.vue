@@ -148,6 +148,7 @@
   // Tables
   import SocialTrafficTable from './Dashboard/SocialTrafficTable';
   import PageVisitsTable from './Dashboard/PageVisitsTable';
+  import router from "../routes/router";
 
   export default {
     components: {
@@ -202,6 +203,12 @@
         };
         this.bigLineChart.chartData = chartData;
         this.bigLineChart.activeIndex = index;
+      }
+    },
+    beforeCreate() {
+      const session = localStorage.getItem('session');
+      if (!session) {
+        router.push({ name: 'login' });
       }
     },
     mounted() {

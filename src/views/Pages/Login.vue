@@ -106,12 +106,15 @@ export default {
         password: this.model.password
       })
         .then(function (response) {
-          var sessionHash = response.data.data.hash;
+          const sessionHash = response.data.data.hash;
           localStorage.setItem('session', sessionHash);
 
           router.push({ name: 'dashboard' });
         })
         .catch(function (error) {
+          // this.$notify();
+          // this.notification.error(error);
+
           console.log(error);
         });
 
