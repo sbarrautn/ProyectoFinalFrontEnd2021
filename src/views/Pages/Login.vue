@@ -106,18 +106,20 @@ export default {
       })
         .then((response) => {
           const sessionHash = response.data.data.hash;
-          localStorage.setItem('session', sessionHash);
+          if (this.model.rememberMe) {
+            localStorage.setItem('session', sessionHash);
+          } else {
+            sessionStorage.setItem('session', sessionHash);
+          }
 
-          router.push({ name: 'dashboard' });
+          router.push({name: 'dashboard'});
         })
         .catch((error) => {
-          let message = '';
           if (error.response.data.errors.message) {
-            message = error.response.data.errors.message;
+            this.$notify({type: 'warning', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.response.data.errors.message});
           } else {
-            message = error.message;
+            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
           }
-          this.$notify({verticalAlign: 'bottom', horizontalAlign: 'center', message: message});
         });
     }
   }

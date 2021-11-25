@@ -206,7 +206,10 @@
       }
     },
     beforeCreate() {
-      const session = localStorage.getItem('session');
+      let session = localStorage.getItem('session');
+      if (!session) {
+        session = sessionStorage.getItem('session');
+      }
       if (!session) {
         router.push({ name: 'login' });
       }
