@@ -90,6 +90,7 @@ import router from "../../routes/router";
 export default {
   data() {
     return {
+      error: '',
       model: {
         email: '',
         password: '',
@@ -99,25 +100,27 @@ export default {
   },
   methods: {
     onSubmit() {
-      // this will be called only after form is valid. You can do api call here to login
-
       axios.post('http://api.proyecto.test/api/login', {
         email: this.model.email,
         password: this.model.password
       })
-        .then(function (response) {
-          var tokenHash = response.data.data.hash;
-          localStorage.setItem('token', tokenHash);
+        .then((response) => {
+          const sessionHash = response.data.data.hash;
+          if (this.model.rememberMe) {
+            localStorage.setItem('session', sessionHash);
+          } else {
+            sessionStorage.setItem('session', sessionHash);
+          }
 
-          console.log(localStorage.getItem('token'));
-          console.log(response);
-
-          router.go({ name: '/#/dashboard' });
+          router.push({name: 'dashboard'});
         })
-        .catch(function (error) {
-          console.log(error);
+        .catch((error) => {
+          if (error.response.data.errors.message) {
+            this.$notify({type: 'warning', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.response.data.errors.message});
+          } else {
+            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+          }
         });
-
     }
   }
 };
