@@ -93,7 +93,7 @@
           lastName: '',
           email: '',
           password: '',
-          confirmationUrl: 'http://localhost:80/api/confirm',
+          confirmationUrl: 'http://localhost:8081/#/confirm',
           successMsg: 'Cuenta creada correctamente!',
           conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
         }
@@ -109,8 +109,6 @@
           password: this.model.password
         })
           .then((response) => {
-            console.log(response.data)
-            console.log(response.data.http_code)
             if (response.data.http_code === 201) {
               this.$notify({type: 'success', verticalAlign: 'bottom', horizontalAlign: 'center', message: this.model.successMsg});
 

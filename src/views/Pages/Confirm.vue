@@ -6,10 +6,13 @@
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white">Cuenta confirmada!</h1>
-              <p class="text-lead text-white">Ya puedes ingresar al dashboard y comenzar a utilizar la plataforma.</p>
+              <h1 class="text-white">{{ title }}</h1>
+              <p class="text-lead text-white">{{ msg }}</p>
             </b-col>
           </b-row>
+        </div>
+        <div class="text-center">
+          <b-button @click="goToDashboard" variant="primary" class="mt-4">Ir al dashboard</b-button>
         </div>
       </b-container>
       <div class="separator separator-bottom separator-skew zindex-100">
@@ -28,8 +31,43 @@ import router from "../../routes/router";
 export default {
   name: 'confirm',
   data() {
-    return {}
+    return {
+      tokenHash: 'token_1',
+      title: '',
+      msg: ''
+    }
   },
+  methods: {
+    goToDashboard() {
+      router.push({name: 'dashboard'});
+    }
+  },
+  mounted() {
+    axios.post(
+      'http://api.proyecto.test/api/confirm',
+      {},
+      {
+        params: {
+          hash: this.tokenHash
+        }
+      }
+    )
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          this.title = 'Cuenta confirmada!'
+          this.msg = 'Ya puedes ingresar al dashboard y comenzar a utilizar la plataforma.'
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.http_code === 409) {
+          this.title = 'Tu cuenta ya se encuentra confirmada!'
+          this.msg = 'Puedes ingresar al dashboard y utilizar la plataforma.'
+          this.$notify({type: 'warning', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.response.data.message});
+        } else {
+          this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+        }
+      });
+  }
 };
 </script>
 <style></style>
