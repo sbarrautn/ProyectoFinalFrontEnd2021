@@ -26,32 +26,28 @@
       <b-row class="justify-content-center">
         <b-col lg="6" md="8" >
           <b-card no-body class="bg-secondary border-0">
-            <b-card-header class="bg-transparent pb-5">
-              <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
-              <div class="text-center">
-                <a href="#" class="btn btn-neutral btn-icon mr-4">
-                  <span class="btn-inner--icon"><img src="img/icons/common/github.svg"></span>
-                  <span class="btn-inner--text">Github</span>
-                </a>
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="img/icons/common/google.svg"></span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
-              </div>
-            </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <small>Or sign up with credentials</small>
+                <small>Regístrate con tus credenciales</small>
               </div>
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
                 <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="ni ni-hat-3"
-                              placeholder="Name"
-                              name="Name"
+                              placeholder="Nombre"
+                              name="FirstName"
                               :rules="{required: true}"
-                              v-model="model.name">
+                              v-model="model.firstName">
+                  </base-input>
+
+                  <base-input alternative
+                              class="mb-3"
+                              prepend-icon="ni ni-hat-3"
+                              placeholder="Apellido"
+                              name="LastName"
+                              :rules="{required: true}"
+                              v-model="model.lastName">
                   </base-input>
 
                   <base-input alternative
@@ -66,25 +62,14 @@
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="ni ni-lock-circle-open"
-                              placeholder="password"
+                              placeholder="Contraseña"
                               type="password"
                               name="Password"
                               :rules="{required: true, min: 6}"
                               v-model="model.password">
                   </base-input>
-                  <div class="text-muted font-italic"><small>password strength: <span
-                    class="text-success font-weight-700">strong</span></small></div>
-                  <b-row class=" my-4">
-                    <b-col cols="12">
-                      <base-input :rules="{ required: { allowFalse: false } }" name=Privacy Policy>
-                        <b-form-checkbox v-model="model.agree">
-                          <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                        </b-form-checkbox>
-                      </base-input>
-                    </b-col>
-                  </b-row>
                   <div class="text-center">
-                    <b-button type="submit" variant="primary" class="mt-4">Create account</b-button>
+                    <b-button type="submit" variant="primary" class="mt-4">Crear cuenta</b-button>
                   </div>
                 </b-form>
               </validation-observer>
@@ -97,21 +82,48 @@
 </template>
 <script>
 
+  import router from "../../routes/router";
+
   export default {
     name: 'register',
     data() {
       return {
         model: {
-          name: '',
+          firstName: '',
+          lastName: '',
           email: '',
           password: '',
-          agree: false
+          confirmationUrl: 'http://localhost:80/api/confirm',
+          successMsg: 'Cuenta creada correctamente!',
+          conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
         }
       }
     },
     methods: {
       onSubmit() {
-        // this will be called only after form is valid. You can do an api call here to register users
+        axios.post('http://api.proyecto.test/api/signup', {
+          firstName: this.model.firstName,
+          lastName: this.model.lastName,
+          email: this.model.email,
+          confirmationUrl: this.model.confirmationUrl,
+          password: this.model.password
+        })
+          .then((response) => {
+            console.log(response.data)
+            console.log(response.data.http_code)
+            if (response.data.http_code === 201) {
+              this.$notify({type: 'success', verticalAlign: 'bottom', horizontalAlign: 'center', message: this.model.successMsg});
+
+              router.push({name: 'proceed'});
+            }
+          })
+          .catch((error) => {
+            if (error.response.data.http_code === 409) {
+              this.$notify({type: 'warning', verticalAlign: 'bottom', horizontalAlign: 'center', message: this.model.conflictMsg});
+            } else {
+              this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+            }
+          });
       }
     }
 
