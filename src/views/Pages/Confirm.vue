@@ -32,7 +32,6 @@ export default {
   name: 'confirm',
   data() {
     return {
-      tokenHash: 'token_1',
       title: '',
       msg: ''
     }
@@ -48,7 +47,7 @@ export default {
       {},
       {
         params: {
-          hash: this.tokenHash
+          hash: this.$route.query.hash
         }
       }
     )
@@ -56,6 +55,9 @@ export default {
         if (response.data.http_code === 200) {
           this.title = 'Cuenta confirmada!'
           this.msg = 'Ya puedes ingresar al dashboard y comenzar a utilizar la plataforma.'
+
+          const sessionHash = response.data.data.session
+          localStorage.setItem('session', sessionHash)
         }
       })
       .catch((error) => {
