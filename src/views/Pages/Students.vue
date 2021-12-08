@@ -19,10 +19,8 @@
 
     <b-container fluid class="mt--6">
       <b-row>
-        <StudentsTable></StudentsTable>
-        <b-col xl="8" class="order-xl-1">
-          <new-student></new-student>
-        </b-col>
+        <new-student></new-student>
+        <students-table></students-table>
       </b-row>
     </b-container>
   </div>

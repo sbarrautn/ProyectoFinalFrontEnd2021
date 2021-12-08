@@ -121,7 +121,11 @@ export default {
       this.activeNotifications = false;
     },
     logOut() {
-      const session = localStorage.getItem('session');
+      let session = localStorage.getItem('session');
+      if (!session) {
+        session = sessionStorage.getItem('session');
+      }
+
       axios.post('http://api.proyecto.test/api/logout', null, {
         headers: {
           'Authorization': `Basic ${session}`
