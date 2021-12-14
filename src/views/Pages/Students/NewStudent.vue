@@ -123,7 +123,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 .custom-card {
   min-width: 100% !important;
   margin-bottom: 70px;
