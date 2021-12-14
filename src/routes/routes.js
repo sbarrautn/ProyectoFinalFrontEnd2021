@@ -64,6 +64,11 @@ const routes = [
         name: 'confirm',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Confirm.vue')
       },
+      {
+        path: '/students',
+        name: 'students',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Students.vue')
+      },
       { path: '*', component: NotFound }
     ]
   }
