@@ -9,8 +9,8 @@
         <b-container fluid class="d-flex align-items-center">
           <b-row>
             <b-col lg="7" md="10">
-              <h1 class="display-2 text-white">Gestión de estudiantes</h1>
-              <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de tus estudiantes</p>
+              <h1 class="display-2 text-white">Gestión de tareas y asignaciones</h1>
+              <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de las tareas y asignaciones</p>
             </b-col>
           </b-row>
         </b-container>
@@ -23,30 +23,30 @@
           <card>
             <b-row align-v="center" slot="header">
               <b-col cols="8">
-                <h3 class="mb-0">Nuevo estudiante</h3>
+                <h3 class="mb-0">Nueva tarea</h3>
               </b-col>
             </b-row>
 
             <b-form @submit.prevent="updateProfile">
-              <h6 class="heading-small text-muted mb-4">Datos del estudiante</h6>
+              <h6 class="heading-small text-muted mb-4">Datos de la tarea</h6>
 
               <div class="pl-lg-4">
                 <b-row>
                   <b-col lg="5">
                     <base-input
                       type="text"
-                      label="Nombre"
-                      placeholder="First Name"
-                      v-model="user.firstName"
+                      label="Título"
+                      placeholder="Título de la tarea"
+                      v-model="task.title"
                     >
                     </base-input>
                   </b-col>
                   <b-col lg="5">
                     <base-input
                       type="text"
-                      label="Apellido"
-                      placeholder="Last Name"
-                      v-model="user.lastName"
+                      label="Descripción"
+                      placeholder="Descripción de la tarea"
+                      v-model="task.description"
                     >
                     </base-input>
                   </b-col>
@@ -54,29 +54,26 @@
                 <b-row>
                   <b-col lg="5">
                     <base-input alternative
-                                prepend-icon="ni ni-email-83"
-                                type="email"
-                                name="email"
-                                label="Dirección de Email"
-                                placeholder="alumno@email.com"
-                                v-model="user.email"
+                                type="date"
+                                name="Desde"
+                                label="Desde"
+                                placeholder=""
+                                v-model="task.fromDate"
                     >
                     </base-input>
                   </b-col>
                   <b-col lg="4">
                     <base-input alternative
-                                class="mb-3"
-                                prepend-icon="ni ni-lock-circle-open"
-                                placeholder="Contraseña"
-                                type="password"
-                                label="Contraseña"
-                                name="Password"
-                                :rules="{required: true, min: 6}"
-                                v-model="user.password">
+                                type="date"
+                                name="Hasta"
+                                label="Hasta"
+                                placeholder=""
+                                v-model="task.toDate"
+                    >
                     </base-input>
                   </b-col>
                   <b-col cols="1" class="text-right">
-                    <base-button type="primary" native-type="submit" class="my-4">Invitar</base-button>
+                    <base-button type="primary" native-type="submit" class="my-4">Guardar cambios</base-button>
                   </b-col>
                 </b-row>
               </div>
@@ -94,12 +91,11 @@ import router from "../../../routes/router";
 export default {
   data() {
     return {
-      user: {
-        email: '',
-        firstName: 'Mike',
-        lastName: 'Andrew',
-        password: '',
-        confirmationUrl: 'http://localhost:8081/#/confirm',
+      task: {
+        title: 'Tarea 1',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        fromDate: '11/11/2021',
+        toDate: '',
         successMsg: 'Cuenta creada correctamente!',
         conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
       }
@@ -157,3 +153,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.custom-card {
+  min-width: 100% !important;
+  margin-bottom: 70px;
+}
+</style>
