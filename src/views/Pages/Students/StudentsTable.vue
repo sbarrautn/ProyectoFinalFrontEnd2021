@@ -8,7 +8,7 @@
               header-row-class-name="thead-dark"
               :data="students">
       <el-table-column label="Id"
-                       min-width="310px"
+                       min-width="100px"
                        prop="id">
         <template v-slot="{row}">
           <b-media no-body class="align-items-center">
@@ -31,7 +31,7 @@
       </el-table-column>
       <el-table-column label="Email"
                        prop="email"
-                       min-width="140px">
+                       min-width="170px">
       </el-table-column>
 
       <el-table-column label="Estado"
