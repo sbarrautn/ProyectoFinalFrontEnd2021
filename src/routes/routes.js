@@ -84,6 +84,21 @@ const routes = [
         name: 'tasks',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Tasks/TasksTable.vue')
       },
+      {
+        path: '/course/new',
+        name: 'new-course',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/NewCourse.vue')
+      },
+      {
+        path: '/course/edit',
+        name: 'edit-course',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/EditCourse.vue')
+      },
+      {
+        path: '/courses',
+        name: 'courses',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/CoursesTable.vue')
+      },
       { path: '*', component: NotFound }
     ]
   }

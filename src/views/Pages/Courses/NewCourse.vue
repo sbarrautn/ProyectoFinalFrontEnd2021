@@ -9,8 +9,8 @@
         <b-container fluid class="d-flex align-items-center">
           <b-row>
             <b-col lg="7" md="10">
-              <h1 class="display-2 text-white">Gestión de tareas y asignaciones</h1>
-              <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de las tareas y asignaciones</p>
+              <h1 class="display-2 text-white">Gestión de cursado</h1>
+              <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de los cursos</p>
             </b-col>
           </b-row>
         </b-container>
@@ -23,12 +23,12 @@
           <card>
             <b-row align-v="center" slot="header">
               <b-col cols="8">
-                <h3 class="mb-0">Editar tarea</h3>
+                <h3 class="mb-0">Nuevo curso</h3>
               </b-col>
             </b-row>
 
             <b-form @submit.prevent="updateProfile">
-              <h6 class="heading-small text-muted mb-4">Datos de la tarea</h6>
+              <h6 class="heading-small text-muted mb-4">Datos del curso</h6>
 
               <div class="pl-lg-4">
                 <b-row>
@@ -36,8 +36,8 @@
                     <base-input
                       type="text"
                       label="Título"
-                      placeholder="Título de la tarea"
-                      v-model="task.title"
+                      placeholder="Título del curso"
+                      v-model="course.title"
                     >
                     </base-input>
                   </b-col>
@@ -45,8 +45,8 @@
                     <base-input
                       type="text"
                       label="Descripción"
-                      placeholder="Descripción de la tarea"
-                      v-model="task.description"
+                      placeholder="Descripción del curso"
+                      v-model="course.description"
                     >
                     </base-input>
                   </b-col>
@@ -58,7 +58,7 @@
                                 name="Desde"
                                 label="Desde"
                                 placeholder=""
-                                v-model="task.fromDate"
+                                v-model="course.fromDate"
                     >
                     </base-input>
                   </b-col>
@@ -68,12 +68,12 @@
                                 name="Hasta"
                                 label="Hasta"
                                 placeholder=""
-                                v-model="task.toDate"
+                                v-model="course.toDate"
                     >
                     </base-input>
                   </b-col>
                   <b-col cols="1" class="text-right">
-                    <base-button type="primary" native-type="submit" class="my-4">Guardar cambios</base-button>
+                    <base-button type="primary" native-type="submit" class="my-4">Crear curso</base-button>
                   </b-col>
                 </b-row>
               </div>
@@ -91,10 +91,10 @@ import router from "../../../routes/router";
 export default {
   data() {
     return {
-      task: {
-        title: 'Tarea 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        fromDate: '11/11/2021',
+      course: {
+        title: '',
+        description: '',
+        fromDate: '',
         toDate: '',
         successMsg: 'Cuenta creada correctamente!',
         conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
