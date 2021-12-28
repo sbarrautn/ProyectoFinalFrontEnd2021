@@ -128,7 +128,7 @@ export default {
 
       axios.post('http://api.proyecto.test/api/logout', null, {
         headers: {
-          'Authorization': `Basic ${session}`
+          'Authorization': `${session}`
         }
       })
         .then((response) => {

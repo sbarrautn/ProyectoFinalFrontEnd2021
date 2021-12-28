@@ -250,6 +250,7 @@
 <script>
 import router from "../../../routes/router";
 import {Select, Option} from 'element-ui'
+import activityExample from './../../Tables/activityExample'
 
 export default {
   components: {
@@ -277,7 +278,7 @@ export default {
         title: '',
         description: '',
         type: 1,
-        body: '',
+        body: JSON.stringify(activityExample),
         task: 1,
         successMsg: 'Actividad creada correctamente!',
         conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
@@ -290,12 +291,12 @@ export default {
       if (!session) {
         session = sessionStorage.getItem('session');
       }
-      axios.post('http://api.proyecto.test/api/student', {
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        confirmationUrl: this.user.confirmationUrl,
-        password: this.user.password
+      axios.post('http://api.proyecto.test/api/activities', {
+        title: this.activity.title,
+        type: this.activity.type,
+        description: this.activity.description,
+        body: this.activity.body,
+        task: this.activity.task,
       }, {
         headers: {
           'Authorization': `${session}`
