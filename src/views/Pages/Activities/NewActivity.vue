@@ -27,7 +27,7 @@
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
+            <b-form @submit.prevent="createActivity">
               <h6 class="heading-small text-muted mb-4">Datos de la actividad</h6>
 
               <div class="pl-lg-4">
@@ -60,7 +60,7 @@
               <div>
                 <b-row>
                   <b-col cols="1" class="text-right">
-                    <base-button type="primary" native-type="submit" class="my-4">Agregar apartado</base-button>
+                    <base-button v-on:click="addActivityPart" type="primary" class="my-4">Agregar apartado</base-button>
                   </b-col>
                 </b-row>
 
@@ -286,7 +286,7 @@ export default {
     };
   },
   methods: {
-    updateProfile() {
+    createActivity() {
       let session = localStorage.getItem('session');
       if (!session) {
         session = sessionStorage.getItem('session');
@@ -324,6 +324,9 @@ export default {
             this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
           }
         });
+    },
+    addActivityPart() {
+
     }
   },
   beforeCreate() {
