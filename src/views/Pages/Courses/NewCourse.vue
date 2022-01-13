@@ -27,7 +27,7 @@
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
+            <b-form @submit.prevent="createCourse">
               <h6 class="heading-small text-muted mb-4">Datos del curso</h6>
 
               <div class="pl-lg-4">
@@ -94,25 +94,25 @@ export default {
       course: {
         title: '',
         description: '',
+        days: [],
         fromDate: '',
         toDate: '',
-        successMsg: 'Cuenta creada correctamente!',
-        conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
+        successMsg: 'Curso creado correctamente!'
       }
     };
   },
   methods: {
-    updateProfile() {
+    createCourse() {
       let session = localStorage.getItem('session');
       if (!session) {
         session = sessionStorage.getItem('session');
       }
-      axios.post('http://api.proyecto.test/api/student', {
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        confirmationUrl: this.user.confirmationUrl,
-        password: this.user.password
+      axios.post('http://api.proyecto.test/api/courses', {
+        title: this.course.title,
+        description: this.course.description,
+        fromDate: this.course.fromDate,
+        toDate: this.course.toDate,
+        days: this.course.days
       }, {
         headers: {
           'Authorization': `${session}`
@@ -124,21 +124,12 @@ export default {
               type: 'success',
               verticalAlign: 'bottom',
               horizontalAlign: 'center',
-              message: this.model.successMsg
+              message: this.course.successMsg
             });
           }
         })
         .catch((error) => {
-          if (error.response.data.http_code === 409) {
-            this.$notify({
-              type: 'warning',
-              verticalAlign: 'bottom',
-              horizontalAlign: 'center',
-              message: this.model.conflictMsg
-            });
-          } else {
             this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
-          }
         });
     }
   },
