@@ -70,6 +70,7 @@
 import projects from './../../Tables/projects'
 import students from './../../Tables/studentsData'
 import {Table, TableColumn} from 'element-ui'
+import router from "../../../routes/router";
 
 export default {
   name: 'light-table',
@@ -83,6 +84,15 @@ export default {
       students,
       currentPage: 1
     };
+  },
+  beforeCreate() {
+    let session = localStorage.getItem('session');
+    if (!session) {
+      session = sessionStorage.getItem('session');
+    }
+    if (!session) {
+      router.push({ name: 'login' });
+    }
   }
 }
 </script>
