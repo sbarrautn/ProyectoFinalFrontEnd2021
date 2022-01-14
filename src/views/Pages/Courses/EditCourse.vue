@@ -27,7 +27,7 @@
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
+            <b-form @submit.prevent="editCourse">
               <h6 class="heading-small text-muted mb-4">Datos del curso</h6>
 
               <div class="pl-lg-4">
@@ -103,7 +103,7 @@ export default {
     };
   },
   methods: {
-    updateProfile() {
+    editCourse() {
       const session = SessionService.getSession();
       // TODO: add days
       axios.put('http://api.proyecto.test/api/courses/' + this.course.id, {
