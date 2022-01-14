@@ -8,7 +8,7 @@
         <!-- Header container -->
         <b-container fluid class="d-flex align-items-center">
           <b-row>
-            <b-col lg="7" md="10">
+            <b-col lg="12" md="10">
               <h1 class="display-2 text-white">Gestión de cursado</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de los cursos</p>
             </b-col>
@@ -92,12 +92,13 @@ export default {
   data() {
     return {
       course: {
-        title: 'Curso 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        id: 4,// TODO: pass id dynamically
+        title: '',
+        description: '',
+        days: [],
         fromDate: '',
         toDate: '',
-        successMsg: 'Cuenta creada correctamente!',
-        conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
+        successMsg: 'Cambios guardados'
       }
     };
   },
@@ -107,38 +108,30 @@ export default {
       if (!session) {
         session = sessionStorage.getItem('session');
       }
-      axios.post('http://api.proyecto.test/api/student', {
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        confirmationUrl: this.user.confirmationUrl,
-        password: this.user.password
+      // TODO: add days
+      axios.put('http://api.proyecto.test/api/courses/' + this.course.id, {
+        title: this.course.title,
+        description: this.course.description,
+        fromDate: this.course.fromDate,
+        toDate: this.course.toDate,
+        days: this.course.days
       }, {
         headers: {
           'Authorization': `${session}`
         }
       })
         .then((response) => {
-          if (response.data.http_code === 201) {
+          if (response.data.http_code === 200) {
             this.$notify({
               type: 'success',
               verticalAlign: 'bottom',
               horizontalAlign: 'center',
-              message: this.model.successMsg
+              message: this.course.successMsg
             });
           }
         })
         .catch((error) => {
-          if (error.response.data.http_code === 409) {
-            this.$notify({
-              type: 'warning',
-              verticalAlign: 'bottom',
-              horizontalAlign: 'center',
-              message: this.model.conflictMsg
-            });
-          } else {
-            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
-          }
+          this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
         });
     }
   },

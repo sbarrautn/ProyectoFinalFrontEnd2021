@@ -107,6 +107,7 @@ export default {
       if (!session) {
         session = sessionStorage.getItem('session');
       }
+      // TODO: add days
       axios.post('http://api.proyecto.test/api/courses', {
         title: this.course.title,
         description: this.course.description,
