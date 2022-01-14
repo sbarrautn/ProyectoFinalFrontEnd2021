@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import router from "../../../routes/router";
+import SessionService from "../../../services/SessionService";
 
 export default {
   data() {
@@ -103,10 +103,7 @@ export default {
   },
   methods: {
     createCourse() {
-      let session = localStorage.getItem('session');
-      if (!session) {
-        session = sessionStorage.getItem('session');
-      }
+      const session = SessionService.getSession();
       // TODO: add days
       axios.post('http://api.proyecto.test/api/courses', {
         title: this.course.title,
@@ -135,13 +132,7 @@ export default {
     }
   },
   beforeCreate() {
-    let session = localStorage.getItem('session');
-    if (!session) {
-      session = sessionStorage.getItem('session');
-    }
-    if (!session) {
-      router.push({name: 'login'});
-    }
+    SessionService.validateSession();
   }
 };
 </script>
