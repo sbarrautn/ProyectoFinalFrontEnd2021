@@ -40,85 +40,6 @@
           </card>
         </div>
 
-
-        <div v-if="showHardcodedCourses" class="custom-card mr-3 ml-3">
-          <card>
-            <b-row align-v="center" slot="header">
-              <b-col cols="8">
-                <h3 class="mb-0">Curso 1</h3>
-              </b-col>
-              <b-col cols="2">
-                <i class="ni ni-bullet-list-67"></i>
-              </b-col>
-              <b-col cols="2">
-                <i class="ni ni-fat-remove"></i>
-              </b-col>
-            </b-row>
-
-            <b-form @submit.prevent="updateProfile">
-              <div class="pl-lg-4">
-                <b-row>
-                  <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
-                  </b-col>
-                </b-row>
-              </div>
-            </b-form>
-          </card>
-        </div>
-
-        <div v-if="showHardcodedCourses" class="custom-card mr-3 ml-3">
-          <card>
-            <b-row align-v="center" slot="header">
-              <b-col cols="8">
-                <h3 class="mb-0">Curso 2</h3>
-              </b-col>
-              <b-col cols="2">
-                <img src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png" alt="edit button">
-                <i class="ni ni-bullet-list-67"></i>
-              </b-col>
-              <b-col cols="2">
-                <i class="ni ni-fat-remove"></i>
-              </b-col>
-            </b-row>
-
-            <b-form @submit.prevent="updateProfile">
-              <div class="pl-lg-4">
-                <b-row>
-                  <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
-                  </b-col>
-                </b-row>
-              </div>
-            </b-form>
-          </card>
-        </div>
-
-        <div v-if="showHardcodedCourses" class="custom-card mr-3 ml-3">
-          <a href="#">
-            <card>
-              <b-row align-v="center" slot="header">
-                <b-col cols="8">
-                  <h3 class="mb-0">Curso 3</h3>
-                </b-col>
-                <b-col cols="2">
-                  <i class="ni ni-bullet-list-67"></i>
-                </b-col>
-                <b-col cols="2">
-                  <i class="ni ni-fat-remove"></i>
-                </b-col>
-              </b-row>
-              <div class="pl-lg-4">
-                <b-row>
-                  <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px"
-                         alt="course image">
-                  </b-col>
-                </b-row>
-              </div>
-            </card>
-          </a>
-        </div>
       </b-row>
     </b-container>
   </div>
@@ -236,7 +157,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card-body {
   padding: 0;
 }
