@@ -22,26 +22,24 @@
         <div v-for="course in courses" v-bind:key="course.id" class="custom-card mr-3 ml-3">
           <card>
             <b-row align-v="center" slot="header">
-              <b-col cols="8">
+              <b-col cols="8" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
                 <h3 class="mb-0">{{ course.title }}</h3>
               </b-col>
-              <b-col cols="2">
+              <b-col cols="2" style="cursor: pointer" v-on:click="goToEditCoursePage(course.id)">
                 <i class="ni ni-bullet-list-67"></i>
               </b-col>
-              <b-col cols="2">
+              <b-col cols="2" style="cursor: pointer" v-on:click="deleteCourse(course.id)">
                 <i class="ni ni-fat-remove"></i>
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
-              <div class="pl-lg-4">
-                <b-row>
-                  <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
-                  </b-col>
-                </b-row>
-              </div>
-            </b-form>
+            <div class="pl-lg-0" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
+              <b-row>
+                <b-col lg="12">
+                  <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px" alt="course image">
+                </b-col>
+              </b-row>
+            </div>
           </card>
         </div>
 
@@ -145,6 +143,17 @@ export default {
       showHardcodedCourses: false
     };
   },
+  methods: {
+    goToShowCoursePage(id) {
+      console.log("show: " + id)
+    },
+    goToEditCoursePage(id) {
+      console.log("edit: " + id)
+    },
+    deleteCourse(id) {
+      console.log("delete: " + id)
+    }
+  },
   beforeCreate() {
     SessionService.validateSession();
 
@@ -171,7 +180,12 @@ export default {
                 }
               })
               .catch((error) => {
-                this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+                this.$notify({
+                  type: 'danger',
+                  verticalAlign: 'bottom',
+                  horizontalAlign: 'center',
+                  message: error.message
+                });
               });
           })
         }
