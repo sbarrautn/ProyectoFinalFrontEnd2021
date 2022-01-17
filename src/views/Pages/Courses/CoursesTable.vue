@@ -18,7 +18,35 @@
 
     <b-container fluid class="mt--6">
       <b-row>
-        <div class="custom-card mr-3 ml-3">
+
+        <div v-for="course in courses" v-bind:key="course.id" class="custom-card mr-3 ml-3">
+          <card>
+            <b-row align-v="center" slot="header">
+              <b-col cols="8">
+                <h3 class="mb-0">{{ course.title }}</h3>
+              </b-col>
+              <b-col cols="2">
+                <i class="ni ni-bullet-list-67"></i>
+              </b-col>
+              <b-col cols="2">
+                <i class="ni ni-fat-remove"></i>
+              </b-col>
+            </b-row>
+
+            <b-form @submit.prevent="updateProfile">
+              <div class="pl-lg-4">
+                <b-row>
+                  <b-col lg="12">
+                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
+                  </b-col>
+                </b-row>
+              </div>
+            </b-form>
+          </card>
+        </div>
+
+
+        <div v-if="showHardcodedCourses" class="custom-card mr-3 ml-3">
           <card>
             <b-row align-v="center" slot="header">
               <b-col cols="8">
@@ -44,7 +72,7 @@
           </card>
         </div>
 
-        <div class="custom-card mr-3 ml-3">
+        <div v-if="showHardcodedCourses" class="custom-card mr-3 ml-3">
           <card>
             <b-row align-v="center" slot="header">
               <b-col cols="8">
@@ -70,7 +98,7 @@
           </card>
         </div>
 
-        <div class="custom-card mr-3 ml-3">
+        <div v-if="showHardcodedCourses" class="custom-card mr-3 ml-3">
           <a href="#">
             <card>
               <b-row align-v="center" slot="header">
@@ -87,7 +115,8 @@
               <div class="pl-lg-4">
                 <b-row>
                   <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px" alt="course image">
+                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px"
+                         alt="course image">
                   </b-col>
                 </b-row>
               </div>
@@ -101,7 +130,6 @@
 
 <script>
 import {Table, TableColumn} from "element-ui";
-import courses from "../../Tables/coursesData";
 import SessionService from "../../../services/SessionService";
 
 export default {
@@ -110,13 +138,47 @@ export default {
     [TableColumn.name]: TableColumn
   },
   data() {
+    let courses = [];
     return {
       courses,
-      currentPage: 1
+      currentPage: 1,
+      showHardcodedCourses: false
     };
   },
   beforeCreate() {
     SessionService.validateSession();
+
+    const session = SessionService.getSession();
+    axios.get('http://api.proyecto.test/api/courses/',
+      {
+        headers: {
+          'Authorization': `${session}`
+        }
+      })
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          let coursesIds = response.data.data.courses;
+          coursesIds.forEach(courseId => {
+            axios.get(`http://api.proyecto.test/api/courses/${courseId}`,
+              {
+                headers: {
+                  'Authorization': `${session}`
+                }
+              })
+              .then((response) => {
+                if (response.data.http_code === 200) {
+                  this.courses.push(response.data.data)
+                }
+              })
+              .catch((error) => {
+                this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+              });
+          })
+        }
+      })
+      .catch((error) => {
+        this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+      });
   }
 };
 </script>
