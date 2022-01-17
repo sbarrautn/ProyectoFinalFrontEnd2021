@@ -88,6 +88,7 @@
 
 <script>
 import SessionService from "../../../services/SessionService";
+import router from "../../../routes/router";
 
 export default {
   data() {
@@ -126,6 +127,7 @@ export default {
               horizontalAlign: 'center',
               message: this.course.successMsg
             });
+            router.push({name: 'courses'});
           }
         })
         .catch((error) => {
@@ -162,7 +164,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .custom-card {
   min-width: 100% !important;
   margin-bottom: 70px;
