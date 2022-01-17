@@ -36,7 +36,8 @@
             <div class="pl-lg-0" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
               <b-row>
                 <b-col lg="12">
-                  <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px" alt="course image">
+                  <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px"
+                       alt="course image">
                 </b-col>
               </b-row>
             </div>
@@ -151,7 +152,48 @@ export default {
       console.log("edit: " + id)
     },
     deleteCourse(id) {
-      console.log("delete: " + id)
+      if (confirm("Está seguro de que quiere eliminar este curso?")) {
+        const session = SessionService.getSession();
+
+        axios.delete(`http://api.proyecto.test/api/courses/${id}`,
+          {
+            headers: {
+              'Authorization': `${session}`
+            }
+          })
+          .then((response) => {
+            if (response.data.http_code === 200) {
+              const index = this.courses.map(function (e) {
+                return e.id
+              }).indexOf(id)
+              if (index > -1) {
+                this.courses.splice(index, 1);
+              } else {
+                this.$notify({
+                  type: 'danger',
+                  verticalAlign: 'bottom',
+                  horizontalAlign: 'center',
+                  message: 'No se pudieron reflejar los cambios!'
+                });
+              }
+
+              this.$notify({
+                type: 'success',
+                verticalAlign: 'bottom',
+                horizontalAlign: 'center',
+                message: 'Curso eliminado'
+              });
+            }
+          })
+          .catch((error) => {
+            this.$notify({
+              type: 'danger',
+              verticalAlign: 'bottom',
+              horizontalAlign: 'center',
+              message: error.message
+            });
+          });
+      }
     }
   },
   beforeCreate() {
