@@ -19,27 +19,23 @@
     <b-container fluid class="mt--6">
       <b-row>
 
-        <div v-for="course in courses" v-bind:key="course.id" class="custom-card mr-3 ml-3">
-          <card>
+        <div v-for="course in courses" v-bind:key="course.id" class="custom-card m-3">
+          <card style="min-width: 300px">
             <b-row align-v="center" slot="header">
               <b-col cols="8" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
                 <h3 class="mb-0">{{ course.title }}</h3>
               </b-col>
               <b-col cols="2" style="cursor: pointer" v-on:click="goToEditCoursePage(course.id)">
-                <i class="ni ni-bullet-list-67"></i>
+                <img width="20px" src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png" alt="edit button">
               </b-col>
               <b-col cols="2" style="cursor: pointer" v-on:click="deleteCourse(course.id)">
-                <i class="ni ni-fat-remove"></i>
+                <img width="20px" src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png" alt="edit button">
               </b-col>
             </b-row>
 
-            <div class="pl-lg-0" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
-              <b-row>
-                <b-col lg="12">
-                  <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px"
-                       alt="course image">
-                </b-col>
-              </b-row>
+            <div class="p-lg-0" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
+              <img class="p-0" src="img/theme/course-default.png" style="max-width: 320px"
+                   alt="course image">
             </div>
           </card>
         </div>
@@ -78,6 +74,7 @@
                 <h3 class="mb-0">Curso 2</h3>
               </b-col>
               <b-col cols="2">
+                <img src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png" alt="edit button">
                 <i class="ni ni-bullet-list-67"></i>
               </b-col>
               <b-col cols="2">
@@ -238,3 +235,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.card-body {
+  padding: 0;
+}
+</style>
