@@ -8,9 +8,10 @@
         <!-- Header container -->
         <b-container fluid class="d-flex align-items-center">
           <b-row>
-            <b-col lg="7" md="10">
+            <b-col lg="12" md="10">
               <h1 class="display-2 text-white">Gestión de cursado</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de los cursos</p>
+              <router-link :to="{ name: 'courses' }">Volver a mis cursos</router-link>
             </b-col>
           </b-row>
         </b-container>
@@ -27,7 +28,7 @@
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
+            <b-form @submit.prevent="editCourse">
               <h6 class="heading-small text-muted mb-4">Datos del curso</h6>
 
               <div class="pl-lg-4">
@@ -86,75 +87,84 @@
 </template>
 
 <script>
+import SessionService from "../../../services/SessionService";
 import router from "../../../routes/router";
 
 export default {
   data() {
     return {
       course: {
-        title: 'Curso 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        id: 0,
+        title: '',
+        description: '',
+        days: [],
         fromDate: '',
         toDate: '',
-        successMsg: 'Cuenta creada correctamente!',
-        conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
+        successMsg: 'Cambios guardados'
       }
     };
   },
   methods: {
-    updateProfile() {
-      let session = localStorage.getItem('session');
-      if (!session) {
-        session = sessionStorage.getItem('session');
-      }
-      axios.post('http://api.proyecto.test/api/student', {
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        confirmationUrl: this.user.confirmationUrl,
-        password: this.user.password
+    editCourse() {
+      const session = SessionService.getSession();
+      // TODO: add days
+      axios.put('http://api.proyecto.test/api/courses/' + this.course.id, {
+        title: this.course.title,
+        description: this.course.description,
+        fromDate: this.course.fromDate,
+        toDate: this.course.toDate,
+        days: this.course.days
       }, {
         headers: {
           'Authorization': `${session}`
         }
       })
         .then((response) => {
-          if (response.data.http_code === 201) {
+          if (response.data.http_code === 200) {
             this.$notify({
               type: 'success',
               verticalAlign: 'bottom',
               horizontalAlign: 'center',
-              message: this.model.successMsg
+              message: this.course.successMsg
             });
+            router.push({name: 'courses'});
           }
         })
         .catch((error) => {
-          if (error.response.data.http_code === 409) {
-            this.$notify({
-              type: 'warning',
-              verticalAlign: 'bottom',
-              horizontalAlign: 'center',
-              message: this.model.conflictMsg
-            });
-          } else {
-            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
-          }
+          this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
         });
     }
   },
   beforeCreate() {
-    let session = localStorage.getItem('session');
-    if (!session) {
-      session = sessionStorage.getItem('session');
-    }
-    if (!session) {
-      router.push({name: 'login'});
-    }
+    SessionService.validateSession();
+  },
+  created() {
+    this.course.id = this.$route.params.id;
+    const session = SessionService.getSession();
+
+    axios.get(`http://api.proyecto.test/api/courses/${this.course.id}`, {
+      headers: {
+        'Authorization': `${session}`
+      }
+    })
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          const course = response.data.data;
+          this.course.title = course.title;
+          this.course.description = course.description;
+          this.course.fromDate = course.fromDate;
+          this.course.toDate = course.toDate;
+          this.course.days = course.days;
+        }
+      })
+      .catch((error) => {
+        this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+      });
   }
 };
 </script>
 
-<style>
+<style scoped>
 .custom-card {
   min-width: 100% !important;
   margin-bottom: 70px;

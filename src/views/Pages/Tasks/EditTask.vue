@@ -27,7 +27,7 @@
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
+            <b-form @submit.prevent="editTask">
               <h6 class="heading-small text-muted mb-4">Datos de la tarea</h6>
 
               <div class="pl-lg-4">
@@ -86,70 +86,51 @@
 </template>
 
 <script>
-import router from "../../../routes/router";
+import SessionService from "../../../services/SessionService";
 
 export default {
   data() {
     return {
       task: {
-        title: 'Tarea 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        fromDate: '11/11/2021',
+        id: 4,
+        title: '',
+        description: '',
+        fromDate: '',
         toDate: '',
-        successMsg: 'Cuenta creada correctamente!',
-        conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
+        successMsg: 'Cambios guardados'
       }
     };
   },
   methods: {
-    updateProfile() {
-      let session = localStorage.getItem('session');
-      if (!session) {
-        session = sessionStorage.getItem('session');
-      }
-      axios.post('http://api.proyecto.test/api/student', {
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        confirmationUrl: this.user.confirmationUrl,
-        password: this.user.password
+    editTask() {
+      const session = SessionService.getSession();
+      axios.put('http://api.proyecto.test/api/tasks/' + this.task.id, {
+        title: this.task.title,
+        description: this.task.description,
+        fromDate: this.task.fromDate,
+        toDate: this.task.toDate
       }, {
         headers: {
           'Authorization': `${session}`
         }
       })
         .then((response) => {
-          if (response.data.http_code === 201) {
+          if (response.data.http_code === 200) {
             this.$notify({
               type: 'success',
               verticalAlign: 'bottom',
               horizontalAlign: 'center',
-              message: this.model.successMsg
+              message: this.task.successMsg
             });
           }
         })
         .catch((error) => {
-          if (error.response.data.http_code === 409) {
-            this.$notify({
-              type: 'warning',
-              verticalAlign: 'bottom',
-              horizontalAlign: 'center',
-              message: this.model.conflictMsg
-            });
-          } else {
-            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
-          }
+          this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
         });
     }
   },
   beforeCreate() {
-    let session = localStorage.getItem('session');
-    if (!session) {
-      session = sessionStorage.getItem('session');
-    }
-    if (!session) {
-      router.push({name: 'login'});
-    }
+    SessionService.validateSession();
   }
 };
 </script>

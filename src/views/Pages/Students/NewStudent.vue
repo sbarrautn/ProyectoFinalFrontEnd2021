@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
 
-      <b-form @submit.prevent="updateProfile">
+      <b-form @submit.prevent="inviteStudent">
         <h6 class="heading-small text-muted mb-4">Datos del estudiante</h6>
 
         <div class="pl-lg-4">
@@ -66,6 +66,8 @@
 </template>
 <script>
 
+import SessionService from "../../../services/SessionService";
+
 export default {
   data() {
     return {
@@ -81,11 +83,8 @@ export default {
     };
   },
   methods: {
-    updateProfile() {
-      let session = localStorage.getItem('session');
-      if (!session) {
-        session = sessionStorage.getItem('session');
-      }
+    inviteStudent() {
+      const session = SessionService.getSession();
       axios.post('http://api.proyecto.test/api/student', {
         firstName: this.user.firstName,
         lastName: this.user.lastName,
@@ -120,6 +119,9 @@ export default {
           }
         });
     }
+  },
+  beforeCreate() {
+    SessionService.validateSession();
   }
 };
 </script>

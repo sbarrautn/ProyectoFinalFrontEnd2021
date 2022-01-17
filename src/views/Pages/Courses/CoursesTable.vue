@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
-         style="min-height: 600px; background-image: url(img/theme/students-in-classroom-792x418.jpg); background-size: cover; background-position: center top;">
+         style="min-height: 400px; background-image: url(img/theme/students-in-classroom-792x418.jpg); background-size: cover; background-position: center top;">
       <b-container fluid>
         <!-- Mask -->
         <span class="mask bg-gradient-success opacity-8"></span>
@@ -9,7 +9,7 @@
         <b-container fluid class="d-flex align-items-center">
           <b-row>
             <b-col lg="12" md="10">
-              <h1 class="display-2 text-white">Mis cursos</h1>
+              <h1 class="display-2 text-white">Tus cursos</h1>
             </b-col>
           </b-row>
         </b-container>
@@ -18,99 +18,41 @@
 
     <b-container fluid class="mt--6">
       <b-row>
-        <div class="custom-card">
-          <card>
+
+        <div v-for="course in courses" v-bind:key="course.id" class="custom-card m-3">
+          <card style="min-width: 300px">
             <b-row align-v="center" slot="header">
-              <b-col cols="8">
-                <h3 class="mb-0">Curso 1</h3>
+              <b-col cols="8" style="cursor: pointer" v-on:click="goToShowCourseDashboardPage(course.id)">
+                <h3 class="mb-0">{{ course.title }}</h3>
               </b-col>
-              <b-col cols="2">
-                <i class="ni ni-bullet-list-67"></i>
+              <b-col cols="2" style="cursor: pointer" v-on:click="goToEditCoursePage(course.id)">
+                <img width="20px"
+                     src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png"
+                     alt="edit button">
               </b-col>
-              <b-col cols="2">
-                <i class="ni ni-fat-remove"></i>
+              <b-col cols="2" style="cursor: pointer" v-on:click="deleteCourse(course.id)">
+                <img width="20px"
+                     src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png"
+                     alt="edit button">
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="updateProfile">
-              <div class="pl-lg-4">
-                <b-row>
-                  <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
-                  </b-col>
-                </b-row>
-              </div>
-            </b-form>
+            <div class="p-lg-0" style="cursor: pointer" v-on:click="goToShowCourseDashboardPage(course.id)">
+              <img class="p-0" src="img/theme/course-default.png" style="max-width: 320px"
+                   alt="course image">
+            </div>
           </card>
         </div>
 
-        <div class="horizontal-space"></div>
-
-        <div class="custom-card">
-          <card>
-            <b-row align-v="center" slot="header">
-              <b-col cols="8">
-                <h3 class="mb-0">Curso 2</h3>
-              </b-col>
-              <b-col cols="2">
-                <i class="ni ni-bullet-list-67"></i>
-              </b-col>
-              <b-col cols="2">
-                <i class="ni ni-fat-remove"></i>
-              </b-col>
-            </b-row>
-
-            <b-form @submit.prevent="updateProfile">
-              <div class="pl-lg-4">
-                <b-row>
-                  <b-col lg="12">
-                    <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
-                  </b-col>
-                </b-row>
-              </div>
-            </b-form>
-          </card>
-        </div>
-
-        <div class="horizontal-space"></div>
-
-        <div class="custom-card">
-          <a href="#">
-            <card>
-              <b-row align-v="center" slot="header">
-                <b-col cols="8">
-                  <h3 class="mb-0">Curso 3</h3>
-                </b-col>
-                <b-col cols="2">
-                  <i class="ni ni-bullet-list-67"></i>
-                </b-col>
-                <b-col cols="2">
-                  <i class="ni ni-fat-remove"></i>
-                </b-col>
-              </b-row>
-              <b-form @submit.prevent="updateProfile">
-                <div class="pl-lg-4">
-                  <b-row>
-                    <b-col lg="12">
-                      <img src="img/theme/course-default.png" style="max-width: 200px; padding-right: 15px">
-                    </b-col>
-                  </b-row>
-                </div>
-              </b-form>
-            </card>
-          </a>
-        </div>
       </b-row>
     </b-container>
-    <div class="vertical-space"></div>
   </div>
 </template>
 
 <script>
-import router from "../../../routes/router";
 import {Table, TableColumn} from "element-ui";
-import projects from "../../Tables/projects";
-import courses from "../../Tables/coursesData";
+import SessionService from "../../../services/SessionService";
+import router from "../../../routes/router";
 
 export default {
   components: {
@@ -118,32 +60,110 @@ export default {
     [TableColumn.name]: TableColumn
   },
   data() {
+    let courses = [];
     return {
-      projects,
       courses,
-      currentPage: 1
+      currentPage: 1,
+      showHardcodedCourses: false
     };
   },
+  methods: {
+    goToShowCourseDashboardPage(id) {
+      console.log("show: " + id)
+    },
+    goToEditCoursePage(id) {
+      router.push({name: 'edit-course', params: {id: `${id}`}});
+    },
+    deleteCourse(id) {
+      if (confirm("Está seguro de que quiere eliminar este curso?")) {
+        const session = SessionService.getSession();
+
+        axios.delete(`http://api.proyecto.test/api/courses/${id}`,
+          {
+            headers: {
+              'Authorization': `${session}`
+            }
+          })
+          .then((response) => {
+            if (response.data.http_code === 200) {
+              const index = this.courses.map(function (e) {
+                return e.id
+              }).indexOf(id)
+              if (index > -1) {
+                this.courses.splice(index, 1);
+              } else {
+                this.$notify({
+                  type: 'danger',
+                  verticalAlign: 'bottom',
+                  horizontalAlign: 'center',
+                  message: 'No se pudieron reflejar los cambios!'
+                });
+              }
+
+              this.$notify({
+                type: 'success',
+                verticalAlign: 'bottom',
+                horizontalAlign: 'center',
+                message: 'Curso eliminado'
+              });
+            }
+          })
+          .catch((error) => {
+            this.$notify({
+              type: 'danger',
+              verticalAlign: 'bottom',
+              horizontalAlign: 'center',
+              message: error.message
+            });
+          });
+      }
+    }
+  },
   beforeCreate() {
-    let session = localStorage.getItem('session');
-    if (!session) {
-      session = sessionStorage.getItem('session');
-    }
-    if (!session) {
-      router.push({name: 'login'});
-    }
+    SessionService.validateSession();
+
+    const session = SessionService.getSession();
+    axios.get('http://api.proyecto.test/api/courses/',
+      {
+        headers: {
+          'Authorization': `${session}`
+        }
+      })
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          let coursesIds = response.data.data.courses;
+          coursesIds.forEach(courseId => {
+            axios.get(`http://api.proyecto.test/api/courses/${courseId}`,
+              {
+                headers: {
+                  'Authorization': `${session}`
+                }
+              })
+              .then((response) => {
+                if (response.data.http_code === 200) {
+                  this.courses.push(response.data.data)
+                }
+              })
+              .catch((error) => {
+                this.$notify({
+                  type: 'danger',
+                  verticalAlign: 'bottom',
+                  horizontalAlign: 'center',
+                  message: error.message
+                });
+              });
+          })
+        }
+      })
+      .catch((error) => {
+        this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+      });
   }
 };
 </script>
+
 <style scoped>
-.horizontal-space {
-  margin-right: 30px;
-}
-.vertical-space {
-  margin-bottom: 200px;
-}
-.btn-info {
-  display: inline;
-  padding: 3px 5px;
+.card-body {
+  padding: 0;
 }
 </style>

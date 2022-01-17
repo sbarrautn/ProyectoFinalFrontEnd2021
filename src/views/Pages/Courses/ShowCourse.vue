@@ -8,9 +8,10 @@
         <!-- Header container -->
         <b-container fluid class="d-flex align-items-center">
           <b-row>
-            <b-col lg="7" md="10">
+            <b-col lg="12" md="10">
               <h1 class="display-2 text-white">Gestión de cursado</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de los cursos</p>
+              <router-link :to="{ name: 'Page2', params: { id: 1 } }">Navigate to Page2</router-link>
             </b-col>
           </b-row>
         </b-container>
@@ -23,11 +24,11 @@
           <card>
             <b-row align-v="center" slot="header">
               <b-col cols="8">
-                <h3 class="mb-0">Nuevo curso</h3>
+                <h3 class="mb-0">Editar curso</h3>
               </b-col>
             </b-row>
 
-            <b-form @submit.prevent="createCourse">
+            <b-form @submit.prevent="editCourse">
               <h6 class="heading-small text-muted mb-4">Datos del curso</h6>
 
               <div class="pl-lg-4">
@@ -73,7 +74,7 @@
                     </base-input>
                   </b-col>
                   <b-col cols="1" class="text-right">
-                    <base-button type="primary" native-type="submit" class="my-4">Crear curso</base-button>
+                    <base-button type="primary" native-type="submit" class="my-4">Guardar cambios</base-button>
                   </b-col>
                 </b-row>
               </div>
@@ -92,20 +93,21 @@ export default {
   data() {
     return {
       course: {
+        id: 0,
         title: '',
         description: '',
         days: [],
         fromDate: '',
         toDate: '',
-        successMsg: 'Curso creado correctamente!'
+        successMsg: 'Cambios guardados'
       }
     };
   },
   methods: {
-    createCourse() {
+    editCourse() {
       const session = SessionService.getSession();
       // TODO: add days
-      axios.post('http://api.proyecto.test/api/courses', {
+      axios.put('http://api.proyecto.test/api/courses/' + this.course.id, {
         title: this.course.title,
         description: this.course.description,
         fromDate: this.course.fromDate,
@@ -117,7 +119,7 @@ export default {
         }
       })
         .then((response) => {
-          if (response.data.http_code === 201) {
+          if (response.data.http_code === 200) {
             this.$notify({
               type: 'success',
               verticalAlign: 'bottom',
@@ -127,12 +129,15 @@ export default {
           }
         })
         .catch((error) => {
-            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+          this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
         });
     }
   },
   beforeCreate() {
     SessionService.validateSession();
+  },
+  created() {
+    this.id = this.$route.params.id;
   }
 };
 </script>
