@@ -11,6 +11,7 @@
             <b-col lg="12" md="10">
               <h1 class="display-2 text-white">Gestión de cursado</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de los cursos</p>
+              <router-link :to="{ name: 'courses' }">Volver a mis cursos</router-link>
             </b-col>
           </b-row>
         </b-container>
@@ -92,7 +93,7 @@ export default {
   data() {
     return {
       course: {
-        id: 4,// TODO: pass id dynamically
+        id: 0,
         title: '',
         description: '',
         days: [],
@@ -134,6 +135,29 @@ export default {
   },
   beforeCreate() {
     SessionService.validateSession();
+  },
+  created() {
+    this.course.id = this.$route.params.id;
+    const session = SessionService.getSession();
+
+    axios.get(`http://api.proyecto.test/api/courses/${this.course.id}`, {
+      headers: {
+        'Authorization': `${session}`
+      }
+    })
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          const course = response.data.data;
+          this.course.title = course.title;
+          this.course.description = course.description;
+          this.course.fromDate = course.fromDate;
+          this.course.toDate = course.toDate;
+          this.course.days = course.days;
+        }
+      })
+      .catch((error) => {
+        this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+      });
   }
 };
 </script>

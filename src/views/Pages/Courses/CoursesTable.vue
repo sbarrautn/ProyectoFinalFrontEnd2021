@@ -22,18 +22,22 @@
         <div v-for="course in courses" v-bind:key="course.id" class="custom-card m-3">
           <card style="min-width: 300px">
             <b-row align-v="center" slot="header">
-              <b-col cols="8" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
+              <b-col cols="8" style="cursor: pointer" v-on:click="goToShowCourseDashboardPage(course.id)">
                 <h3 class="mb-0">{{ course.title }}</h3>
               </b-col>
               <b-col cols="2" style="cursor: pointer" v-on:click="goToEditCoursePage(course.id)">
-                <img width="20px" src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png" alt="edit button">
+                <img width="20px"
+                     src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png"
+                     alt="edit button">
               </b-col>
               <b-col cols="2" style="cursor: pointer" v-on:click="deleteCourse(course.id)">
-                <img width="20px" src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png" alt="edit button">
+                <img width="20px"
+                     src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png"
+                     alt="edit button">
               </b-col>
             </b-row>
 
-            <div class="p-lg-0" style="cursor: pointer" v-on:click="goToShowCoursePage(course.id)">
+            <div class="p-lg-0" style="cursor: pointer" v-on:click="goToShowCourseDashboardPage(course.id)">
               <img class="p-0" src="img/theme/course-default.png" style="max-width: 320px"
                    alt="course image">
             </div>
@@ -48,6 +52,7 @@
 <script>
 import {Table, TableColumn} from "element-ui";
 import SessionService from "../../../services/SessionService";
+import router from "../../../routes/router";
 
 export default {
   components: {
@@ -63,11 +68,11 @@ export default {
     };
   },
   methods: {
-    goToShowCoursePage(id) {
+    goToShowCourseDashboardPage(id) {
       console.log("show: " + id)
     },
     goToEditCoursePage(id) {
-      console.log("edit: " + id)
+      router.push({name: 'edit-course', params: {id: `${id}`}});
     },
     deleteCourse(id) {
       if (confirm("Está seguro de que quiere eliminar este curso?")) {

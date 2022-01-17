@@ -133,11 +133,11 @@ export default {
         });
     }
   },
-  created() {
-    this.id = this.$route.params.id;
-  },
   beforeCreate() {
     SessionService.validateSession();
+  },
+  created() {
+    this.id = this.$route.params.id;
   }
 };
 </script>
