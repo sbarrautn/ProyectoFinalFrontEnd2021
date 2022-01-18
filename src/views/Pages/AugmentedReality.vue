@@ -4,18 +4,7 @@
     <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
       <b-container fluid>
         <b-row class="justify-content-xl-center" align-v="center">
-        
-            <iframe src="https://wvlhk.csb.app/" width="300"
-                height="500" allow="camera; microphone" 
-                style="
-                  position: absolute;
-                  top: 10px;
-                  width: 50%;
-                  text-align: left;
-                  z-index: 1;
-                ">
-            </iframe>
-        
+           
         </b-row>
       </b-container>
       <div class="separator separator-bottom separator-skew zindex-100">
@@ -27,14 +16,18 @@
     </div>
     <!-- Page content -->
     <b-container class="mt--8 pb-5">
-      <b-row class="justify-content-center">
-        <b-col lg="5" md="7">
-          
-            
-
-          
-        </b-col>
-      </b-row>
+      <b-row class="justify-content-xl-center" align-v="center" style="margin top: 100px">
+            <iframe src="https://wvlhk.csb.app/" width="300"
+                height="500" allow="camera; microphone" 
+                style="
+                  position: absolute;
+                  top: 10px;
+                  width: 50%;
+                  text-align: left;
+                  z-index: 1;
+                ">
+            </iframe>
+        </b-row>
     </b-container>
   </div>
 </template>
