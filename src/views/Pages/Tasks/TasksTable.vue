@@ -29,22 +29,28 @@
                       header-row-class-name="thead-dark"
                       :data="tasks">
               <el-table-column label="Id"
-                               prop="id">
+                               prop="id"
+                               min-width="100%">
               </el-table-column>
               <el-table-column label="Título"
-                               prop="title">
+                               prop="title"
+                               min-width="200%">
               </el-table-column>
               <el-table-column label="Descripción"
                                prop="description"
-                               min-width="400px">
+                               min-width="400%">
               </el-table-column>
               <el-table-column label="Desde"
                                prop="fromDate"
-                               min-width="150px">
+                               min-width="150%">
               </el-table-column>
               <el-table-column label="Hasta"
                                prop="toDate"
-                               min-width="150px">
+                               min-width="150%">
+              </el-table-column>
+              <el-table-column label=""
+                               min-width="150%">
+                <a href="#!" class="btn btn-sm btn-primary">See all</a>
               </el-table-column>
             </el-table>
 
@@ -56,10 +62,8 @@
 </template>
 
 <script>
-import router from "../../../routes/router";
 import {Table, TableColumn} from "element-ui";
-import projects from "../../Tables/projects";
-import tasks from "../../Tables/tasksData";
+import SessionService from "../../../services/SessionService";
 
 export default {
   components: {
@@ -67,26 +71,54 @@ export default {
     [TableColumn.name]: TableColumn
   },
   data() {
+    let tasks;
     return {
-      projects,
-      tasks,
-      currentPage: 1
+      tasks: [],
+      courseId: 0
     };
   },
   beforeCreate() {
-    let session = localStorage.getItem('session');
-    if (!session) {
-      session = sessionStorage.getItem('session');
-    }
-    if (!session) {
-      router.push({name: 'login'});
-    }
+    SessionService.validateSession();
+  },
+  created() {
+    this.courseId = this.$route.params.id;
+    const session = SessionService.getSession();
+
+    axios.get(`${process.env.VUE_APP_API_URL}courses/${this.courseId}/tasks/`,
+      {
+        headers: {
+          'Authorization': `${session}`
+        }
+      })
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          let tasksIds = response.data.data.tasks;
+          tasksIds.forEach(taskId => {
+            axios.get(`http://api.proyecto.test/api/tasks/${taskId}`,
+              {
+                headers: {
+                  'Authorization': `${session}`
+                }
+              })
+              .then((response) => {
+                if (response.data.http_code === 200) {
+                  this.tasks.push(response.data.data)
+                }
+              })
+              .catch((error) => {
+                this.$notify({
+                  type: 'danger',
+                  verticalAlign: 'bottom',
+                  horizontalAlign: 'center',
+                  message: error.message
+                });
+              });
+          })
+        }
+      })
+      .catch((error) => {
+        this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+      });
   }
 };
 </script>
-<style>
-.btn-info {
-  display: inline;
-  padding: 3px 5px;
-}
-</style>

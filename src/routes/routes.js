@@ -80,7 +80,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Tasks/EditTask.vue')
       },
       {
-        path: '/tasks',
+        path: 'courses/:id/tasks',
         name: 'tasks',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Tasks/TasksTable.vue')
       },
