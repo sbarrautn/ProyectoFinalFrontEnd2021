@@ -11,6 +11,7 @@
             <b-col lg="7" md="10">
               <h1 class="display-2 text-white">Gestión de tareas y asignaciones</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de las tareas y asignaciones</p>
+              <router-link :to="{ name: 'courses' }">Volver a mis cursos</router-link>
             </b-col>
           </b-row>
         </b-container>
@@ -22,7 +23,18 @@
         <div class="custom-card">
           <b-card no-body class="bg-default shadow">
             <b-card-header class="bg-transparent border-0">
-              <h3 class="mb-0 text-white">Tareas</h3>
+              <b-row align-v="center" slot="header">
+                <b-col cols="11">
+                  <h3 class="mb-0 text-white">Tareas</h3>
+                </b-col>
+                <b-col cols="1">
+                  <div class="btn btn-sm btn-primary" style="cursor: pointer" v-on:click="goToCreateTaskPage()">
+                    <img width="20px"
+                         src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/plus-add-new-create-attach-maximize-512.png"
+                         alt="add button">
+                  </div>
+                </b-col>
+              </b-row>
             </b-card-header>
 
             <el-table class="table-responsive table table-dark"
@@ -64,7 +76,7 @@
                   <div style="cursor: pointer" v-on:click="deleteTarea(row.id)">
                     <img width="20px"
                          src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png"
-                         alt="edit button">
+                         alt="delete button">
                   </div>
                 </template>
               </el-table-column>
@@ -94,6 +106,9 @@ export default {
     };
   },
   methods: {
+    goToCreateTaskPage() {
+      router.push({name: 'new-task', params: {id: `${this.courseId}`}});
+    },
     goToEditTaskPage(id) {
       router.push({name: 'edit-task', params: {id: `${id}`}});
     },

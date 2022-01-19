@@ -33,7 +33,7 @@
               <b-col cols="2" style="cursor: pointer" v-on:click="deleteCourse(course.id)">
                 <img width="20px"
                      src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png"
-                     alt="edit button">
+                     alt="delete button">
               </b-col>
             </b-row>
 
