@@ -60,9 +60,8 @@ export default {
     [TableColumn.name]: TableColumn
   },
   data() {
-    let courses = [];
     return {
-      courses,
+      courses: [],
       currentPage: 1,
       showHardcodedCourses: false
     };

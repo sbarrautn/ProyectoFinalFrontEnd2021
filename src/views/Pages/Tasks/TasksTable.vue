@@ -49,9 +49,23 @@
                                min-width="150%">
               </el-table-column>
               <el-table-column label=""
-                               min-width="150%">
+                               min-width="100%" style="padding: 0">
                 <template v-slot="{row}">
-                  <p style="cursor: pointer" v-on:click="goToEditTaskPage(row.id)" class="btn btn-sm btn-primary">Editar</p>
+                  <div style="cursor: pointer" v-on:click="goToEditTaskPage(row.id)">
+                    <img width="20px"
+                         src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/edit-change-pencil-512.png"
+                         alt="edit button">
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label=""
+                               min-width="100%" style="padding: 0">
+                <template v-slot="{row}">
+                  <div style="cursor: pointer" v-on:click="deleteTarea(row.id)">
+                    <img width="20px"
+                         src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/exit-delete-remove-close-x-512.png"
+                         alt="edit button">
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -74,7 +88,6 @@ export default {
     [TableColumn.name]: TableColumn
   },
   data() {
-    let tasks;
     return {
       tasks: [],
       courseId: 0
@@ -84,6 +97,50 @@ export default {
     goToEditTaskPage(id) {
       router.push({name: 'edit-task', params: {id: `${id}`}});
     },
+    deleteTarea(id) {
+      if (confirm("Está seguro de que quiere eliminar esta tarea?")) {
+        const session = SessionService.getSession();
+
+        axios.delete(`${process.env.VUE_APP_API_URL}tasks/${id}`,
+          {
+            headers: {
+              'Authorization': `${session}`
+            }
+          })
+          .then((response) => {
+            if (response.data.http_code === 200) {
+              const index = this.tasks.map(function (e) {
+                return e.id
+              }).indexOf(id)
+              if (index > -1) {
+                this.tasks.splice(index, 1);
+              } else {
+                this.$notify({
+                  type: 'danger',
+                  verticalAlign: 'bottom',
+                  horizontalAlign: 'center',
+                  message: 'No se pudieron reflejar los cambios!'
+                });
+              }
+
+              this.$notify({
+                type: 'success',
+                verticalAlign: 'bottom',
+                horizontalAlign: 'center',
+                message: 'Tarea eliminada'
+              });
+            }
+          })
+          .catch((error) => {
+            this.$notify({
+              type: 'danger',
+              verticalAlign: 'bottom',
+              horizontalAlign: 'center',
+              message: error.message
+            });
+          });
+      }
+    }
   },
   beforeCreate() {
     SessionService.validateSession();
