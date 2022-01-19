@@ -85,7 +85,7 @@ export default {
   methods: {
     inviteStudent() {
       const session = SessionService.getSession();
-      axios.post('http://api.proyecto.test/api/student', {
+      axios.post(`${process.env.VUE_APP_API_URL}student`, {
         firstName: this.user.firstName,
         lastName: this.user.lastName,
         email: this.user.email,

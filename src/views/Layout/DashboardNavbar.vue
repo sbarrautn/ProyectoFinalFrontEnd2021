@@ -126,7 +126,7 @@ export default {
         session = sessionStorage.getItem('session');
       }
 
-      axios.post('http://api.proyecto.test/api/logout', null, {
+      axios.post(`${process.env.VUE_APP_API_URL}logout`, null, {
         headers: {
           'Authorization': `Basic ${session}`
         }

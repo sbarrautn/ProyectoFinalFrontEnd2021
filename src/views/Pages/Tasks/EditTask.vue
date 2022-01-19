@@ -104,7 +104,7 @@ export default {
   methods: {
     editTask() {
       const session = SessionService.getSession();
-      axios.put('http://api.proyecto.test/api/tasks/' + this.task.id, {
+      axios.put(`${process.env.VUE_APP_API_URL}tasks/` + this.task.id, {
         title: this.task.title,
         description: this.task.description,
         fromDate: this.task.fromDate,

@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      axios.post('http://api.proyecto.test/api/login', {
+      axios.post(`${process.env.VUE_APP_API_URL}login`, {
         email: this.model.email,
         password: this.model.password
       })

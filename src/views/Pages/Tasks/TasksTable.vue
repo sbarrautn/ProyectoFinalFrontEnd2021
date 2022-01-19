@@ -94,7 +94,7 @@ export default {
         if (response.data.http_code === 200) {
           let tasksIds = response.data.data.tasks;
           tasksIds.forEach(taskId => {
-            axios.get(`http://api.proyecto.test/api/tasks/${taskId}`,
+            axios.get(`${process.env.VUE_APP_API_URL}tasks/${taskId}`,
               {
                 headers: {
                   'Authorization': `${session}`

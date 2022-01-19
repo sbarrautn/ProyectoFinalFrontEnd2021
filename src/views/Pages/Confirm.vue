@@ -42,10 +42,8 @@ export default {
     }
   },
   mounted() {
-    axios.post(
-      'http://api.proyecto.test/api/confirm',
-      {},
-      {
+    axios.post(`${process.env.VUE_APP_API_URL}confirm`,
+      {}, {
         params: {
           hash: this.$route.query.hash
         }
@@ -64,7 +62,12 @@ export default {
         if (error.response.data.http_code === 409) {
           this.title = 'Tu cuenta ya se encuentra confirmada!'
           this.msg = 'Puedes ingresar al dashboard y utilizar la plataforma.'
-          this.$notify({type: 'warning', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.response.data.message});
+          this.$notify({
+            type: 'warning',
+            verticalAlign: 'bottom',
+            horizontalAlign: 'center',
+            message: error.response.data.message
+          });
         } else {
           this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
         }

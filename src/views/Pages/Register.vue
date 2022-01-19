@@ -101,7 +101,7 @@
     },
     methods: {
       onSubmit() {
-        axios.post('http://api.proyecto.test/api/signup', {
+        axios.post(`${process.env.VUE_APP_API_URL}signup`, {
           firstName: this.model.firstName,
           lastName: this.model.lastName,
           email: this.model.email,

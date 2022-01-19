@@ -78,7 +78,7 @@ export default {
       if (confirm("Está seguro de que quiere eliminar este curso?")) {
         const session = SessionService.getSession();
 
-        axios.delete(`http://api.proyecto.test/api/courses/${id}`,
+        axios.delete(`${process.env.VUE_APP_API_URL}courses/${id}`,
           {
             headers: {
               'Authorization': `${session}`
@@ -123,7 +123,7 @@ export default {
     SessionService.validateSession();
 
     const session = SessionService.getSession();
-    axios.get('http://api.proyecto.test/api/courses/',
+    axios.get(`${process.env.VUE_APP_API_URL}courses/`,
       {
         headers: {
           'Authorization': `${session}`
@@ -133,7 +133,7 @@ export default {
         if (response.data.http_code === 200) {
           let coursesIds = response.data.data.courses;
           coursesIds.forEach(courseId => {
-            axios.get(`http://api.proyecto.test/api/courses/${courseId}`,
+            axios.get(`${process.env.VUE_APP_API_URL}courses/${courseId}`,
               {
                 headers: {
                   'Authorization': `${session}`

@@ -107,7 +107,7 @@ export default {
     editCourse() {
       const session = SessionService.getSession();
       // TODO: add days
-      axios.put('http://api.proyecto.test/api/courses/' + this.course.id, {
+      axios.put(`${process.env.VUE_APP_API_URL}courses/` + this.course.id, {
         title: this.course.title,
         description: this.course.description,
         fromDate: this.course.fromDate,

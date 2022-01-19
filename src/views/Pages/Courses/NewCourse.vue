@@ -105,7 +105,7 @@ export default {
     createCourse() {
       const session = SessionService.getSession();
       // TODO: add days
-      axios.post('http://api.proyecto.test/api/courses', {
+      axios.post(`${process.env.VUE_APP_API_URL}courses`, {
         title: this.course.title,
         description: this.course.description,
         fromDate: this.course.fromDate,

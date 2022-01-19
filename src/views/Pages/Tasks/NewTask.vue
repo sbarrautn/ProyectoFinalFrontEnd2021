@@ -104,7 +104,7 @@ export default {
   methods: {
     createTask() {
       const session = SessionService.getSession();
-      axios.post('http://api.proyecto.test/api/courses/' + this.task.courseId + '/tasks', {
+      axios.post(`${process.env.VUE_APP_API_URL}courses/` + this.task.courseId + '/tasks', {
         title: this.task.title,
         description: this.task.description,
         fromDate: this.task.fromDate,
