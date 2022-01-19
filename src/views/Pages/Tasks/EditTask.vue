@@ -11,6 +11,8 @@
             <b-col lg="7" md="10">
               <h1 class="display-2 text-white">Gestión de tareas y asignaciones</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de las tareas y asignaciones</p>
+              <router-link :to="{ name: 'tasks', params: { id: this.task.courseId }}">Volver las tareas del curso
+              </router-link>
             </b-col>
           </b-row>
         </b-container>
@@ -87,12 +89,14 @@
 
 <script>
 import SessionService from "../../../services/SessionService";
+import router from "../../../routes/router";
 
 export default {
   data() {
     return {
       task: {
-        id: 4,
+        id: 0,
+        courseId: 0,
         title: '',
         description: '',
         fromDate: '',
@@ -122,6 +126,7 @@ export default {
               horizontalAlign: 'center',
               message: this.task.successMsg
             });
+            router.push({name: 'tasks', params: {id: `${this.task.courseId}`}});
           }
         })
         .catch((error) => {
@@ -131,6 +136,30 @@ export default {
   },
   beforeCreate() {
     SessionService.validateSession();
+  },
+  created() {
+    this.task.id = this.$route.params.id;
+    const session = SessionService.getSession();
+
+    axios.get(`${process.env.VUE_APP_API_URL}tasks/${this.task.id}`, {
+      headers: {
+        'Authorization': `${session}`
+      }
+    })
+      .then((response) => {
+        if (response.data.http_code === 200) {
+          const task = response.data.data;
+          this.task.courseId = task.courseId;
+          this.task.title = task.title;
+          this.task.description = task.description;
+          this.task.fromDate = task.fromDate;
+          this.task.toDate = task.toDate;
+          this.task.days = task.days;
+        }
+      })
+      .catch((error) => {
+        this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+      });
   }
 };
 </script>
