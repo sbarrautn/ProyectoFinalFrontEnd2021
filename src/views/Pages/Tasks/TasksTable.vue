@@ -50,7 +50,9 @@
               </el-table-column>
               <el-table-column label=""
                                min-width="150%">
-                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                <template v-slot="{row}">
+                  <p style="cursor: pointer" v-on:click="goToEditTaskPage(row.id)" class="btn btn-sm btn-primary">Editar</p>
+                </template>
               </el-table-column>
             </el-table>
 
@@ -64,6 +66,7 @@
 <script>
 import {Table, TableColumn} from "element-ui";
 import SessionService from "../../../services/SessionService";
+import router from "../../../routes/router";
 
 export default {
   components: {
@@ -76,6 +79,11 @@ export default {
       tasks: [],
       courseId: 0
     };
+  },
+  methods: {
+    goToEditTaskPage(id) {
+      router.push({name: 'edit-task', params: {id: `${id}`}});
+    },
   },
   beforeCreate() {
     SessionService.validateSession();
