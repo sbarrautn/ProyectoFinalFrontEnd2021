@@ -11,6 +11,7 @@
             <b-col lg="7" md="10">
               <h1 class="display-2 text-white">Gestión de cursado</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de los cursos</p>
+              <router-link :to="{ name: 'courses' }">Volver a mis cursos</router-link>
             </b-col>
           </b-row>
         </b-container>

@@ -10,6 +10,7 @@
           <b-row>
             <b-col lg="12" md="10">
               <h1 class="display-2 text-white">Tus cursos</h1>
+              <router-link :to="{ name: 'new-course' }">Nuevo curso</router-link>
             </b-col>
           </b-row>
         </b-container>
