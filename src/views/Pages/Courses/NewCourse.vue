@@ -53,6 +53,19 @@
                   </b-col>
                 </b-row>
                 <b-row>
+                  <b-col lg="12">
+                    <div>
+                      <label>Días de clase</label><br>
+                      <label>(Seleccione los días en que se dictarán las clases)</label><br>
+                      <div>
+                        <b-button v-for="(day, i) in this.daysOfTheWeek" v-bind:key="i" v-on:click="toggleDay(i)"
+                                  v-bind:class="getCssClass(i)" variant="primary">{{ day }}
+                        </b-button>
+                      </div>
+                    </div>
+                  </b-col>
+                </b-row>
+                <b-row>
                   <b-col lg="5">
                     <base-input alternative
                                 type="date"
@@ -95,11 +108,20 @@ export default {
       course: {
         title: '',
         description: '',
-        days: [],
+        days: [true, true, true, true, true, true, true,],
         fromDate: '',
         toDate: '',
         successMsg: 'Curso creado correctamente!'
-      }
+      },
+      daysOfTheWeek: [
+        'Domingo',
+        'Lunes',
+        'Martes',
+        'Miércoles',
+        'Jueves',
+        'Viernes',
+        'Sábado',
+      ]
     };
   },
   methods: {
@@ -128,8 +150,14 @@ export default {
           }
         })
         .catch((error) => {
-            this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
+          this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
         });
+    },
+    toggleDay(key) {
+      this.course.days[key] = !this.course.days[key]
+    },
+    getCssClass(i) {
+      return 'disabled-button' + i;
     }
   },
   beforeCreate() {
@@ -142,5 +170,15 @@ export default {
 .custom-card {
   min-width: 100% !important;
   margin-bottom: 70px;
+}
+
+.disabled-button0,
+.disabled-button1,
+.disabled-button2,
+.disabled-button3,
+.disabled-button4,
+.disabled-button5,
+.disabled-button6 {
+  background-color: #d0d5f3;
 }
 </style>
