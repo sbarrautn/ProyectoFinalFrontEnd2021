@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     goToShowCourseDashboardPage(id) {
-      console.log("show: " + id)
+      router.push({name: 'course-dashboard', params: {id: `${id}`}});
     },
     goToEditCoursePage(id) {
       router.push({name: 'edit-course', params: {id: `${id}`}});
