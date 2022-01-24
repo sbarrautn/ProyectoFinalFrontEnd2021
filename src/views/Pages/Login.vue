@@ -112,7 +112,7 @@ export default {
             sessionStorage.setItem('session', sessionHash);
           }
 
-          router.push({name: 'dashboard'});
+          router.push({name: 'courses'});
         })
         .catch((error) => {
           if (error.response.data.errors.message) {
