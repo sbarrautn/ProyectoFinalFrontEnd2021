@@ -11,7 +11,7 @@
             <b-col lg="7" md="10">
               <h1 class="display-2 text-white">Gestión de tareas y asignaciones</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de las tareas y asignaciones</p>
-              <router-link :to="{ name: 'courses' }">Volver a mis cursos</router-link>
+              <router-link :to="{ name: 'course-dashboard', params: {courseId: `${this.$route.params.id}`} }">Volver al curso</router-link>
             </b-col>
           </b-row>
         </b-container>

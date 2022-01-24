@@ -15,7 +15,7 @@
         <sidebar-item
                 :link="{
                   name: 'Tareas',
-                  path: `/courses/${this.courseId}/dashboard`,
+                  path: `/courses/${this.$route.params.courseId}/tasks`,
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
