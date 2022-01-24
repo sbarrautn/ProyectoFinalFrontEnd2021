@@ -2,7 +2,7 @@
   <div>
 
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
-      <h1>{{ this.courseId }}</h1>
+      <h1>{{ this.course.id }}</h1>
       <!-- Card stats -->
       <b-row>
         <b-col xl="3" md="6">
@@ -218,9 +218,10 @@ export default {
     SessionService.validateSession();
   },
   created() {
+    this.course.id = this.$route.params.courseId;
     const session = SessionService.getSession();
 
-    axios.get(`${process.env.VUE_APP_API_URL}courses/${this.courseId}`, {
+    axios.get(`${process.env.VUE_APP_API_URL}courses/${this.course.id}`, {
       headers: {
         'Authorization': `${session}`
       }

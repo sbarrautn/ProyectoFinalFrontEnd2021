@@ -6,7 +6,7 @@
 export default {
   data() {
     return {
-      courseId: 1//FIXME: Make id dynamic
+      courseId: 0//TODO: Make id to be saved on LocalStorage
     }
   },
   methods: {
