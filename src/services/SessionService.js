@@ -12,6 +12,15 @@ class SessionService {
     return session;
   }
 
+  static cleanSession() {
+    if (localStorage.getItem('session')) {
+      localStorage.removeItem('session');
+      sessionStorage.removeItem('session');
+    } else {
+      sessionStorage.removeItem('session');
+    }
+  }
+
   static validateSession() {
     const session = this.getSession();
     if (!session) {

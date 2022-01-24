@@ -5,42 +5,17 @@
       <template slot="links">
         <sidebar-item
           :link="{
-            name: 'Dashboard',
-            path: '/dashboard',
+            name: 'Cursos',
+            path: '/courses',
             icon: 'ni ni-tv-2 text-primary',
           }"
         >
         </sidebar-item>
 
         <sidebar-item
-            :link="{
-              name: 'Icons',
-              path: '/icons',
-              icon: 'ni ni-planet text-blue'
-              }"
-            >
-        </sidebar-item>
-
-        <sidebar-item
-              :link="{
-                name: 'Maps',
-                path: '/maps',
-                icon: 'ni ni-pin-3 text-orange'
-              }">
-        </sidebar-item>
-
-        <sidebar-item
-              :link="{
-                name: 'User Profile',
-                path: '/profile',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
-
-        <sidebar-item
                 :link="{
-                  name: 'Tables',
-                  path: '/tables',
+                  name: 'Tareas',
+                  path: `/courses/${this.courseId}/dashboard`,
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
@@ -89,7 +64,7 @@
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
-          <router-view></router-view>
+          <router-view :courseId="this.courseId" :setCourseId="this.setCourseId"></router-view>
         </fade-transition>
       </div>
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
@@ -122,6 +97,7 @@
   import { FadeTransition } from 'vue2-transitions';
 
   export default {
+    props: ['courseId', 'setCourseId'],
     components: {
       DashboardNavbar,
       ContentFooter,

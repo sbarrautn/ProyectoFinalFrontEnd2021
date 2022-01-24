@@ -56,7 +56,7 @@
         :duration="pageTransitionDuration"
         mode="out-in"
       >
-        <router-view></router-view>
+        <router-view :courseId="this.courseId" :setCourseId="this.setCourseId"></router-view>
       </zoom-center-transition>
     </div>
 
@@ -98,12 +98,7 @@
       BaseNav,
       ZoomCenterTransition
     },
-    props: {
-      backgroundColor: {
-        type: String,
-        default: 'black'
-      }
-    },
+    props: ['courseId', 'setCourseId'],
     data() {
       return {
         showMenu: false,

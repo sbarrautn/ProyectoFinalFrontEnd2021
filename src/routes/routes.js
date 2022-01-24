@@ -5,7 +5,7 @@ import NotFound from '@/views/NotFoundPage.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/courses/:courseId',
     redirect: 'dashboard',
     component: DashboardLayout,
     children: [
@@ -38,9 +38,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
       },
       {
-        path: '/courses/:id/dashboard',
+        path: 'dashboard',
         name: 'course-dashboard',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/CourseDashboard.vue')
       }
     ]
   },

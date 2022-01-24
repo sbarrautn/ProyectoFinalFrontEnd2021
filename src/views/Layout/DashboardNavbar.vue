@@ -47,7 +47,6 @@
         </a>
 
         <template>
-
           <b-dropdown-header class="noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
@@ -68,7 +67,7 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item v-on:click="logOut" href="#!">
+          <b-dropdown-item v-on:click="logOut">
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
           </b-dropdown-item>
@@ -82,6 +81,7 @@
 import {CollapseTransition} from 'vue2-transitions';
 import {BaseNav, Modal} from '@/components';
 import router from "../../routes/router";
+import SessionService from "../../services/SessionService";
 
 export default {
   components: {
@@ -121,10 +121,7 @@ export default {
       this.activeNotifications = false;
     },
     logOut() {
-      let session = localStorage.getItem('session');
-      if (!session) {
-        session = sessionStorage.getItem('session');
-      }
+      const session = SessionService.getSession();
 
       axios.post(`${process.env.VUE_APP_API_URL}logout`, null, {
         headers: {
@@ -132,18 +129,18 @@ export default {
         }
       })
         .then((response) => {
-          if (localStorage.getItem('session')) {
-            localStorage.removeItem('session');
-            sessionStorage.removeItem('session');
-          } else {
-            sessionStorage.removeItem('session');
-          }
+          SessionService.cleanSession()
 
           router.push({name: 'login'});
         })
         .catch((error) => {
           if (error.response.data.errors.message) {
-            this.$notify({type: 'warning', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.response.data.errors.message});
+            this.$notify({
+              type: 'warning',
+              verticalAlign: 'bottom',
+              horizontalAlign: 'center',
+              message: error.response.data.errors.message
+            });
           } else {
             this.$notify({type: 'danger', verticalAlign: 'bottom', horizontalAlign: 'center', message: error.message});
           }

@@ -2,6 +2,7 @@
   <div>
 
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
+      <h1>{{ this.courseId }}</h1>
       <!-- Card stats -->
       <b-row>
         <b-col xl="3" md="6">
@@ -148,10 +149,10 @@ import StatsCard from '@/components/Cards/StatsCard';
 // Tables
 import SocialTrafficTable from '../Dashboard/SocialTrafficTable';
 import PageVisitsTable from '../Dashboard/PageVisitsTable';
-import router from "../../routes/router";
 import SessionService from "../../services/SessionService";
 
 export default {
+  props: ['courseId'],
   components: {
     LineChart,
     BarChart,
@@ -162,6 +163,14 @@ export default {
   },
   data() {
     return {
+      course: {
+        id: 0,
+        title: '',
+        description: '',
+        days: [],
+        fromDate: '',
+        toDate: '',
+      },
       bigLineChart: {
         allData: [
           [0, 20, 10, 30, 15, 40, 20, 60, 60],
@@ -193,7 +202,7 @@ export default {
   },
   methods: {
     initBigChart(index) {
-      let chartData = {
+      this.bigLineChart.chartData = {
         datasets: [
           {
             label: 'Performance',
@@ -202,24 +211,16 @@ export default {
         ],
         labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       };
-      this.bigLineChart.chartData = chartData;
       this.bigLineChart.activeIndex = index;
     }
   },
   beforeCreate() {
-    let session = localStorage.getItem('session');
-    if (!session) {
-      session = sessionStorage.getItem('session');
-    }
-    if (!session) {
-      router.push({name: 'login'});
-    }
+    SessionService.validateSession();
   },
   created() {
-    this.course.id = this.$route.params.id;
     const session = SessionService.getSession();
 
-    axios.get(`${process.env.VUE_APP_API_URL}courses/${this.course.id}`, {
+    axios.get(`${process.env.VUE_APP_API_URL}courses/${this.courseId}`, {
       headers: {
         'Authorization': `${session}`
       }

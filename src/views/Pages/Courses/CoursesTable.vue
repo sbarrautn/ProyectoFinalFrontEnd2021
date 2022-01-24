@@ -56,6 +56,7 @@ import SessionService from "../../../services/SessionService";
 import router from "../../../routes/router";
 
 export default {
+  props: ['courseId', 'setCourseId'],
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn
@@ -69,7 +70,8 @@ export default {
   },
   methods: {
     goToShowCourseDashboardPage(id) {
-      router.push({name: 'course-dashboard', params: {id: `${id}`}});
+      this.setCourseId(id);
+      router.push({name: 'course-dashboard', params: {courseId: `${id}`}});
     },
     goToEditCoursePage(id) {
       router.push({name: 'edit-course', params: {id: `${id}`}});
