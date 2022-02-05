@@ -1,22 +1,29 @@
 <template>
   <div>
     <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
-      <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-             xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
-      </div>
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
+         style="min-height: 400px; background-image: url(img/theme/students-in-classroom-792x418.jpg); background-size: cover; background-position: center top;">
+      <b-container fluid style="height: auto">
+        <!-- Mask -->
+        <span class="mask bg-gradient-success opacity-8"></span>
+        <!-- Header container -->
+        <b-container fluid class="d-flex align-items-center mt-8" >
+          <b-row>
+            <b-col lg="7" md="10">
+              <h1 class="display-2 text-white">Visualización de sistemas</h1>
+              <p class="text-white mt-0 mb-5">Al escanear el marcador correspondiente usted podrá visualizar los diferentes sistemas que conforman el cuerpo humano, realizar filtrado de los mismos</p>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-container>
     </div>
     <!-- Page content -->
-    <b-container class="mt--1 pb-5" align-v="center">
-     
-           <iframe align-v="center" src="https://wvlhk.csb.app/" width="300"
-                height="500" allow="camera; microphone">
+    <div class="mt--0 pb-5 container">
+
+           <iframe src="https://wvlhk.csb.app/" width="100%" height="700px" style="margin-right: 0px; margin-left: 0px; margin-top: 0px; margin-bottom:0px;" allow="camera; microphone">
             </iframe>
 
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
@@ -34,6 +41,12 @@ export default {
 </script>
 
 
-<style>
-   
+<style scoped>
+   .container{
+     /*display: flex;*/
+     justify-content: center;
+     margin-top: 0,5px;
+     margin-left: 0,5px;
+     margin-right: 0,5px;
+   }
   </style>
