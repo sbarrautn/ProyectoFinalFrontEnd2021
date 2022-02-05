@@ -99,6 +99,11 @@ const routes = [
         name: 'courses',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/CoursesTable.vue')
       },
+      {
+        path: '/AugmentedReality',
+        name: 'AugmentedReality',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/AugmentedReality.vue')
+      },
       { path: '*', component: NotFound }
     ]
   }
