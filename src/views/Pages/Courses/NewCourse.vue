@@ -87,6 +87,7 @@
 
 <script>
 import router from "../../../routes/router";
+import requestAxios from "../../../plugins/axios";
 
 export default {
   data() {
@@ -107,7 +108,7 @@ export default {
       if (!session) {
         session = sessionStorage.getItem('session');
       }
-      axios.post('http://api.proyecto.test/api/student', {
+      requestAxios.post('/student', {
         firstName: this.user.firstName,
         lastName: this.user.lastName,
         email: this.user.email,

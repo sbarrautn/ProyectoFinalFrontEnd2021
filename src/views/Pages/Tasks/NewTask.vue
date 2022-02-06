@@ -87,6 +87,7 @@
 
 <script>
 import router from "../../../routes/router";
+import requestAxios from "../../../plugins/axios";
 
 export default {
   data() {
@@ -96,9 +97,12 @@ export default {
         description: '',
         fromDate: '',
         toDate: '',
+      },
+      model:{
         successMsg: 'Cuenta creada correctamente!',
         conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
-      }
+      },
+      
     };
   },
   methods: {
@@ -107,13 +111,7 @@ export default {
       if (!session) {
         session = sessionStorage.getItem('session');
       }
-      axios.post('http://api.proyecto.test/api/student', {
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        confirmationUrl: this.user.confirmationUrl,
-        password: this.user.password
-      }, {
+      requestAxios.post('/tasks', this.task, {
         headers: {
           'Authorization': `${session}`
         }

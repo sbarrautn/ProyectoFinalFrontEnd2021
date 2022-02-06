@@ -27,6 +27,7 @@
 <script>
 
 import router from "../../routes/router";
+import requestAxios from "../../plugins/axios";
 
 export default {
   name: 'confirm',
@@ -42,8 +43,8 @@ export default {
     }
   },
   mounted() {
-    axios.post(
-      'http://api.proyecto.test/api/confirm',
+    requestAxios.post(
+      '/confirm',
       {},
       {
         params: {

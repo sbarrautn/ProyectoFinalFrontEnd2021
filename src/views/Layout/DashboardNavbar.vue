@@ -38,10 +38,10 @@
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="img/theme/team-4.jpg">
+                    <img alt="Image placeholder" src="img/theme/team-1.jpg">
                   </span>
             <b-media-body class="ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+              <span class="mb-0 text-sm  font-weight-bold">{{name}}</span>
             </b-media-body>
           </b-media>
         </a>
@@ -82,7 +82,7 @@
 import {CollapseTransition} from 'vue2-transitions';
 import {BaseNav, Modal} from '@/components';
 import router from "../../routes/router";
-
+import requestAxios from "../../plugins/axios";
 export default {
   components: {
     CollapseTransition,
@@ -107,8 +107,12 @@ export default {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: ''
+      searchQuery: '',
+      name: '', 
     };
+  },
+  mounted(){
+    this.name= localStorage.getItem('name');
   },
   methods: {
     capitalizeFirstLetter(string) {
@@ -126,7 +130,7 @@ export default {
         session = sessionStorage.getItem('session');
       }
 
-      axios.post('http://api.proyecto.test/api/logout', null, {
+      requestAxios.post('/logout', null, {
         headers: {
           'Authorization': `Basic ${session}`
         }

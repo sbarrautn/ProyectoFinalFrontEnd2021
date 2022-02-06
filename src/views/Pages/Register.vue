@@ -83,6 +83,7 @@
 <script>
 
   import router from "../../routes/router";
+  import requestAxios from "../../plugins/axios";
 
   export default {
     name: 'register',
@@ -101,7 +102,7 @@
     },
     methods: {
       onSubmit() {
-        axios.post('http://api.proyecto.test/api/signup', {
+        requestAxios.post('/signup', {
           firstName: this.model.firstName,
           lastName: this.model.lastName,
           email: this.model.email,

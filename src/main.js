@@ -17,6 +17,11 @@
 import Vue from 'vue';
 import DashboardPlugin from './plugins/dashboard-plugin';
 import App from './App.vue';
+import Localbase from 'localbase'
+import {startLocalBase} from './loadData';
+startLocalBase();
+let db = new Localbase('db')
+Vue.prototype.$db = db;
 
 // router setup
 import router from './routes/router';

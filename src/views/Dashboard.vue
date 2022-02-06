@@ -5,56 +5,56 @@
       <!-- Card stats -->
       <b-row>
         <b-col xl="3" md="6">
-          <stats-card title="Total traffic"
+          <stats-card title="Tareas Sin Asignar"
                       type="gradient-red"
-                      sub-title="350,897"
-                      icon="ni ni-active-40"
+                      :sub-title="getUnassignedTask() || '0'"
+                      icon="ni ni-watch-time"
                       class="mb-4">
 
-            <template slot="footer">
+            <!-- <template slot="footer">
               <span class="text-success mr-2">3.48%</span>
               <span class="text-nowrap">Since last month</span>
-            </template>
+            </template> -->
           </stats-card>
         </b-col>
         <b-col xl="3" md="6">
-          <stats-card title="Total traffic"
-                      type="gradient-orange"
-                      sub-title="2,356"
-                      icon="ni ni-chart-pie-35"
+          <stats-card title="Tareas Asignadas"
+                      type="gradient-green"
+                      :sub-title="getAssignedTask() || '0'"
+                      icon="ni ni-ruler-pencil"
                       class="mb-4">
 
-            <template slot="footer">
+            <!-- <template slot="footer">
               <span class="text-success mr-2">12.18%</span>
               <span class="text-nowrap">Since last month</span>
-            </template>
+            </template> -->
           </stats-card>
         </b-col>
         <b-col xl="3" md="6">
-          <stats-card title="Sales"
-                      type="gradient-green"
-                      sub-title="924"
-                      icon="ni ni-money-coins"
+          <stats-card title="Estudiantes"
+                      type="gradient-orange"
+                      :sub-title="students.length || '0'"
+                      icon="ni ni-single-02"
                       class="mb-4">
 
-            <template slot="footer">
+            <!-- <template slot="footer">
               <span class="text-danger mr-2">5.72%</span>
               <span class="text-nowrap">Since last month</span>
-            </template>
+            </template> -->
           </stats-card>
 
         </b-col>
         <b-col xl="3" md="6">
-          <stats-card title="Performance"
+          <stats-card title="Cursos"
                       type="gradient-info"
-                      sub-title="49,65%"
-                      icon="ni ni-chart-bar-32"
+                      :sub-title="courses.length || '0'"
+                      icon="ni ni-hat-3"
                       class="mb-4">
 
-            <template slot="footer">
+            <!-- <template slot="footer">
               <span class="text-success mr-2">54.8%</span>
               <span class="text-nowrap">Since last month</span>
-            </template>
+            </template> -->
           </stats-card>
         </b-col>
       </b-row>
@@ -161,6 +161,9 @@
     },
     data() {
       return {
+        tasks: [],
+        students: [],
+        courses:[],
         bigLineChart: {
           allData: [
             [0, 20, 10, 30, 15, 40, 20, 60, 60],
@@ -203,6 +206,15 @@
         };
         this.bigLineChart.chartData = chartData;
         this.bigLineChart.activeIndex = index;
+      },
+      getAssignedTask(){
+        const assignedTasks = this.tasks.filter(task => !!task.group)
+        return assignedTasks.length || 0
+      },
+      getUnassignedTask(){
+        const unassignedTasks = this.tasks.filter(task => !task.group)
+        console.log(unassignedTasks);
+        return unassignedTasks.length || 0
       }
     },
     beforeCreate() {
@@ -216,6 +228,18 @@
     },
     mounted() {
       this.initBigChart(0);
+      this.$db.collection('tasks').get().then(tasks => {
+        console.log(tasks)
+        this.tasks = tasks;
+      })
+      this.$db.collection('students').get().then(students => {
+        console.log(students)
+        this.students = students;
+      })
+      this.$db.collection('courses').get().then(courses => {
+        console.log(courses)
+        this.courses = courses;
+      })
     }
   };
 </script>

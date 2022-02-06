@@ -33,10 +33,24 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/GoogleMaps.vue')
       },
       {
+        path: '/tasks',
+        name: 'tasks',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Tasks/TasksTable.vue')
+      },
+      {
+        path: '/activities',
+        name: 'activities',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Activities/Activities.vue')
+      },
+      {
         path: '/tables',
         name: 'tables',
         component: () => import(/* webpackChunkName: "demo" */ '../views/RegularTables.vue')
-      }
+      },{
+        path: '/courses',
+        name: 'courses',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/CoursesTable.vue')
+      },
     ]
   },
   {
@@ -80,11 +94,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Tasks/EditTask.vue')
       },
       {
-        path: '/tasks',
-        name: 'tasks',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Tasks/TasksTable.vue')
-      },
-      {
         path: '/course/new',
         name: 'new-course',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/NewCourse.vue')
@@ -94,11 +103,7 @@ const routes = [
         name: 'edit-course',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/EditCourse.vue')
       },
-      {
-        path: '/courses',
-        name: 'courses',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/CoursesTable.vue')
-      },
+      
       { path: '*', component: NotFound }
     ]
   }
