@@ -43,6 +43,14 @@
               }"
             >
         </sidebar-item>
+         <sidebar-item
+            :link="{
+              name: 'Cuerpo humano',
+              path: '/AugmentedReality',
+              icon: 'fa fa-camera text-blue'
+              }"
+            >
+        </sidebar-item>
 
         <!-- <sidebar-item
             :link="{

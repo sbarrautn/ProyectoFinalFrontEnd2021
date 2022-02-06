@@ -103,7 +103,16 @@ const routes = [
         name: 'edit-course',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/EditCourse.vue')
       },
-      
+      {
+        path: '/courses',
+        name: 'courses',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/CoursesTable.vue')
+      },
+      {
+        path: '/AugmentedReality',
+        name: 'AugmentedReality',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/AugmentedReality.vue')
+      },
       { path: '*', component: NotFound }
     ]
   }
