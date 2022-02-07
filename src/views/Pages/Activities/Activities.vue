@@ -17,11 +17,6 @@
             <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de tus actividades</p>
           </b-col>
           <b-col cols="2">
-            <b-button
-              variant="primary"
-              v-b-modal.new-activity-modal
-            >Crear actividad</b-button>
-
             <b-modal
               id="new-activity-modal"
               type="primary"
@@ -77,8 +72,30 @@
                   <b-button
                     variant="primary"
                     @click="addQuestion()"
-                  >Agregar</b-button>
+                  >Agregar</b-button>                  
                 </b-form-group>
+                  <b-form-group label="Tipo de Pregunta">
+                    <b-form-radio
+                      
+                      :aria-describedby="ariaDescribedby"
+                      name="some-radios"
+                      value="1"
+                      class="mb-2 mr-sm-2 mb-sm-0 pr-8"
+                    >Multople opción</b-form-radio>
+                    <b-form-radio
+                      
+                      :aria-describedby="ariaDescribedby"
+                      name="some-radios"
+                      value="2"
+                      class="mb-2 mr-sm-2 mb-sm-0 pr-8"
+                    >Verdadero Falso</b-form-radio>
+                    <b-form-radio
+                      :aria-describedby="ariaDescribedby"
+                      name="some-radios"
+                      value="3"
+                      class="mb-2 mr-sm-6 mb-sm-0 pr-8"
+                    >Abierta</b-form-radio>
+                  </b-form-group>
               </b-form>
               <b-list-group class="my-2">
                 <b-list-group-item
@@ -89,6 +106,10 @@
             </b-modal>
           </b-col>
         </b-row>
+        <b-button
+              variant="primary"
+              v-b-modal.new-activity-modal
+            >Crear actividad</b-button>
       </b-container>
     </div>
 
