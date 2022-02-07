@@ -21,6 +21,12 @@
             </b-col>
           </b-row>
         </b-container>
+        <b-row>
+            <b-col lg="12"
+              md="10">
+              <base-button type="primary" native-type="submit" class="my-4">Crear curso</base-button>
+            </b-col>
+          </b-row>
       </b-container>
     </div>
 
