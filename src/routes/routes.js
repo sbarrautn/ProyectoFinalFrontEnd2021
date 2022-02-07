@@ -18,6 +18,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Dashboard.vue')
       },
       {
+        path: '/dashboard/student',
+        name: 'dashboard/student',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/DashboardStudent.vue')
+      },
+      {
         path: '/icons',
         name: 'icons',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Icons.vue')
@@ -50,33 +55,6 @@ const routes = [
         path: '/courses',
         name: 'courses',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Courses/CoursesTable.vue')
-      },
-    ]
-  },
-  {
-    path: '/',
-    redirect: 'login',
-    component: AuthLayout,
-    children: [
-      {
-        path: '/login',
-        name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
-      },
-      {
-        path: '/register',
-        name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
-      },
-      {
-        path: '/proceed',
-        name: 'proceed',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Proceed.vue')
-      },
-      {
-        path: '/confirm',
-        name: 'confirm',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Confirm.vue')
       },
       {
         path: '/students',
@@ -112,6 +90,33 @@ const routes = [
         path: '/AugmentedReality',
         name: 'AugmentedReality',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/AugmentedReality.vue')
+      },
+    ]
+  },
+  {
+    path: '/',
+    redirect: 'login',
+    component: AuthLayout,
+    children: [
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+      },
+      {
+        path: '/proceed',
+        name: 'proceed',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Proceed.vue')
+      },
+      {
+        path: '/confirm',
+        name: 'confirm',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Confirm.vue')
       },
       { path: '*', component: NotFound }
     ]

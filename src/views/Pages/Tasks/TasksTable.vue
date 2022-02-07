@@ -13,8 +13,7 @@
           class="d-flex align-items-center"
         >
           <b-row>
-            <b-col
-            >
+            <b-col>
               <h1 class="display-2 text-white">Gestión de tareas y asignaciones</h1>
               <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de las tareas y asignaciones</p>
             </b-col>
@@ -52,9 +51,15 @@
             </b-card-text>
             <div>
               <b-button
+                v-if="!item.group"
                 variant="outline-primary"
                 v-b-modal="`modal-${item.id}`"
-              > {{item.group ? 'Cambiar' : 'Asignar'}} </b-button>
+              > Asignar </b-button>
+              <b-button
+                v-if="item.group"
+                @click="removeAssignament(item)"
+                variant="outline-danger"
+              > Quitar </b-button>
 
               <b-modal
                 :id="`modal-${item.id}`"
@@ -92,7 +97,7 @@
                         >{{student.name}}</b-list-group-item>
                       </b-list-group>
                       <b-button
-                      class="mt-2"
+                        class="mt-2"
                         variant="outline-primary"
                         @click="asignTask(group, item); $bvModal.hide(`modal-${item.id}`)"
                       >Asignar Grupo</b-button>
@@ -159,6 +164,13 @@ export default {
       group.assignedTask = task.id;
       await this.$db.collection('groups').doc({ id: group.id }).set(group)
       task.group = group
+      await this.$db.collection('tasks').doc({ id: task.id }).set(task)
+      this.getData();
+    },
+    async removeAssignament (task) {
+      task.group.assignedTask = null;
+      await this.$db.collection('groups').doc({ id: task.group.id }).set(task.group)
+      task.group = undefined
       await this.$db.collection('tasks').doc({ id: task.id }).set(task)
       this.getData();
     },
