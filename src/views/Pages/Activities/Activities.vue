@@ -20,6 +20,12 @@
             </b-col>
           </b-row>
         </b-container>
+        <b-row>
+            <b-col lg="12"
+              md="10">
+              <base-button type="primary" native-type="submit" class="my-4">Crear actividad</base-button>
+            </b-col>
+          </b-row>
       </b-container>
     </div>
 
@@ -60,7 +66,9 @@
             </div>
           </b-card>
         </b-col>
+        
       </b-row>
+      
     </b-container>
   </div>
 </template>
