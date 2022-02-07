@@ -24,7 +24,11 @@
         <b-row>
             <b-col lg="12"
               md="10">
-              <base-button type="primary" native-type="submit" class="my-4">Crear curso</base-button>
+              <base-button type="primary"
+              @click="$router.push('/course/new')"
+            native-type="submit" class="my-4">
+            Crear nuevo curso
+            </base-button>
             </b-col>
           </b-row>
       </b-container>
