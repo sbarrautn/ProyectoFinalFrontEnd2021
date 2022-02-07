@@ -8,24 +8,87 @@
         <!-- Mask -->
         <span class="mask bg-gradient-success opacity-8"></span>
         <!-- Header container -->
-        <b-container
-          fluid
-          class="d-flex align-items-center"
+        <b-row
+          align-h="between"
+          align-v="center"
         >
-          <b-row>
-            <b-col
+          <b-col>
+            <h1 class="display-2 text-white">Gestión de actividades</h1>
+            <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de tus actividades</p>
+          </b-col>
+          <b-col cols="2">
+            <b-button
+              variant="primary"
+              v-b-modal.new-activity-modal
+            >Crear actividad</b-button>
+
+            <b-modal
+              id="new-activity-modal"
+              type="primary"
+              title="Agregue una nueva actividad"
+              @hidden="cleanActivity"
+              @ok="saveActivity"
+              cancel-title="Cancelar"
+              ok-title="Crear Actividad"
             >
-              <h1 class="display-2 text-white">Gestión de actividades</h1>
-              <p class="text-white mt-0 mb-5">Aquí puedes llevar el control de tus actividades</p>
-            </b-col>
-          </b-row>
-        </b-container>
-        <b-row>
-            <b-col lg="12"
-              md="10">
-              <base-button type="primary" native-type="submit" class="my-4">Crear actividad</base-button>
-            </b-col>
-          </b-row>
+              <b-form-group label="Nombre de la actividad">
+                <b-form-input
+                  v-model="activity.name"
+                  placeholder="Nombre de la actividad"
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group
+                label="Tipo de actividad"
+                v-slot="{ ariaDescribedby }"
+              >
+                <b-form-radio
+                  v-model="activity.type"
+                  :aria-describedby="ariaDescribedby"
+                  name="some-radios"
+                  value="1"
+                >Autoevaluativa</b-form-radio>
+                <b-form-radio
+                  v-model="activity.type"
+                  :aria-describedby="ariaDescribedby"
+                  name="some-radios"
+                  value="2"
+                >Cohevaluativa</b-form-radio>
+                <b-form-radio
+                  v-model="activity.type"
+                  :aria-describedby="ariaDescribedby"
+                  name="some-radios"
+                  value="3"
+                >Heteroevaluativa</b-form-radio>
+              </b-form-group>
+
+              <b-form
+                inline
+                label="Agrergar preguntas"
+              >
+
+                <b-form-group label="Agregue una pregunta">
+                  <b-form-input
+                    id="inline-form-input-name"
+                    class="mb-2 mr-sm-2 mb-sm-0 pr-8"
+                    placeholder="Escriba su pregunta aqui"
+                    v-model="question"
+                  ></b-form-input>
+
+                  <b-button
+                    variant="primary"
+                    @click="addQuestion()"
+                  >Agregar</b-button>
+                </b-form-group>
+              </b-form>
+              <b-list-group class="my-2">
+                <b-list-group-item
+                  v-for="aQuestion in activity.questions"
+                  :key="`task-${aQuestion}`"
+                >{{aQuestion}}</b-list-group-item>
+              </b-list-group>
+            </b-modal>
+          </b-col>
+        </b-row>
       </b-container>
     </div>
 
@@ -43,11 +106,11 @@
           v-for="item in activities"
           :key="`task-${item.id}`"
         >
-          <b-card :title="item.title ? item.title.toUpperCase(): ''">
+          <b-card :title="item.name ? item.name.toUpperCase(): ''">
             <!-- <b-card-text>
               {{item.description}}
             </b-card-text> -->
-            
+
             <div>
               <b-button
                 variant="outline-primary"
@@ -58,17 +121,47 @@
                 :id="`modal-${item.id}`"
                 centered
                 hide-footer
-                :title="item.title"
+                :title="item.name"
               >
-                Descripcion de {{item.title}}
+                <b-form-group label="Tipo de Actividad">
+                  <b-form-radio
+                    v-model="item.type"
+                    :aria-describedby="ariaDescribedby"
+                    name="some-radios"
+                    value="1"
+                    disabled
+                  >Autoevaluativa</b-form-radio>
+                  <b-form-radio
+                    v-model="item.type"
+                    :aria-describedby="ariaDescribedby"
+                    name="some-radios"
+                    value="2"
+                    disabled
+                  >Cohevaluativa</b-form-radio>
+                  <b-form-radio
+                    v-model="item.type"
+                    :aria-describedby="ariaDescribedby"
+                    name="some-radios"
+                    value="3"
+                    disabled
+                  >Heteroevaluativa</b-form-radio>
+                </b-form-group>
+                <b-form-group label="Preguntas">
+                  <b-list-group class="my-2">
+                    <b-list-group-item
+                      v-for="aQuestion in item.questions"
+                      :key="`task-${aQuestion}`"
+                    >{{aQuestion}}</b-list-group-item>
+                  </b-list-group>
+                </b-form-group>
 
               </b-modal>
             </div>
           </b-card>
         </b-col>
-        
+
       </b-row>
-      
+
     </b-container>
   </div>
 </template>
@@ -91,6 +184,12 @@ export default {
       projects,
       tasks,
       activities: [],
+      activity: {
+        name: '',
+        type: '',
+        questions: [],
+      },
+      question: '',
       studenSelected: [],
       students: [],
       currentPage: 1,
@@ -117,6 +216,29 @@ export default {
         console.log(activities)
         this.activities = activities;
       })
+    },
+    addQuestion () {
+      if (this.question.trim()) {
+        this.activity.questions.push(this.question);
+        this.question = '';
+      } else {
+        this.question = ''
+      }
+    },
+    cleanActivity () {
+      this.activity = {
+        name: '',
+        type: '',
+        questions: [],
+      }
+      this.question = '';
+    },
+    async saveActivity (bvModalEvt) {
+      bvModalEvt.preventDefault()
+      await this.$db.collection('activities').add(this.activity);
+      this.cleanActivity();
+      this.getData();
+      this.$bvModal.hide('new-activity-modal')
     }
   }
 };

@@ -102,19 +102,4 @@ const loadData = () => {
     title: 'Introduccino a realidad aumentada',
     description: 'Obtener credenciales de Google para conectarse a su API.',
   })
-  db.collection('activities').add({
-    id: 1,
-    title: 'Actividad 1',
-    description: 'Se requiere crear bases de proyecto usando tecnologias actuales como Vue, Reac o Angular.',
-  })
-  db.collection('activities').add({
-    id: 2,
-    title: 'Actividad 2',
-    description: 'Se necesita crear un endpoint para conectarse.',
-  })
-  db.collection('activities').add({
-    id: 3,
-    title: 'Actividad 3',
-    description: 'Obtener credenciales de Google para conectarse a su API.',
-  })
 }
