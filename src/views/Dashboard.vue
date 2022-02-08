@@ -125,11 +125,11 @@
           chartData: {
             datasets: [
               {
-                label: 'Performance',
+                label: 'Interacciones',
                 data: [0, 20, 10, 30, 15, 40, 20, 60, 60],
               }
             ],
-            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: ['Mar', 'Abr', 'May', 'Jun', 'Jul', 'Agos', 'Sept', 'Oct'],
           },
           extraOptions: chartConfigs.blueChartOptions,
         },
@@ -150,11 +150,11 @@
         let chartData = {
           datasets: [
             {
-              label: 'Performance',
+              label: 'Interacciones',
               data: this.bigLineChart.allData[index]
             }
           ],
-          labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: ['Mar', 'Abr', 'May', 'Jun', 'Jul', 'Agos', 'Sept', 'Oct'],
         };
         this.bigLineChart.chartData = chartData;
         this.bigLineChart.activeIndex = index;
