@@ -9,19 +9,21 @@
       expand="lg"
     >
       <div slot="brand" class="navbar-wrapper">
-        <b-navbar-brand to="/">
-          <img src="img/brand/white.png">
-        </b-navbar-brand>
+       <!-- <b-navbar-brand to="/">
+          <img src="img/brand/white.png"> 
+        </b-navbar-brand>  -->
       </div>
 
      <template>
        <div class="navbar-collapse-header">
          <b-row>
+
            <b-col cols="6" class="collapse-brand">
              <router-link to="/">
-               <img src="img/brand/green.png">
+               <img src="">
              </router-link>
            </b-col>
+          
            <b-col cols="6" class="collapse-close">
              <button type="button" class="navbar-toggler" @click="showMenu = false">
                <span></span>
@@ -31,22 +33,15 @@
          </b-row>
        </div>
          <b-navbar-nav  class="align-items-lg-center ml-lg-auto">
-           <b-nav-item to="/dashboard">
-               <i class="ni ni-planet"></i>
-               <span class="nav-link-inner--text">Dashboard</span>
+           <b-nav-item to="/login">
+               <i class="ni ni-key-25"></i>
+               <span class="nav-link-inner--text">Iniciar Sesión</span>
            </b-nav-item>
            <b-nav-item to="/register">
                <i class="ni ni-circle-08"></i>
-               <span class="nav-link-inner--text">Register</span>
+               <span class="nav-link-inner--text">Registrarte</span>
            </b-nav-item>
-           <b-nav-item to="/login">
-               <i class="ni ni-key-25"></i>
-               <span class="nav-link-inner--text">Login</span>
-           </b-nav-item>
-           <b-nav-item to="/profile">
-               <i class="ni ni-single-02"></i>
-               <span class="nav-link-inner--text">Profile</span>
-           </b-nav-item>
+           
        </b-navbar-nav>
      </template>
     </base-nav>
@@ -62,26 +57,36 @@
 
     <footer class="py-5" id="footer-main">
       <b-container >
-        <b-row align-v="center" class="justify-content-xl-between">
-          <b-col xl="6">
-            <div class="copyright text-center text-xl-left text-muted">
-              © {{year}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+        <b-row align-v="center" class="justify-content-lg-between">
+          <b-col lg="30" align-v="center">
+            <div class="copyright text-center text-lg-left text-muted">
+            <!-- © {{year}} -->
+              <p 
+              class="font-weight-bold ml-1" 
+              target="_blank"
+              style="color:#5d71e2 "
+              >
+              Plataforma de Apoyo en el Proceso de Enseñanza-Aprendizaje de los Sistemas del Cuerpo Humano 
+              </p>
+              
             </div>
           </b-col>
-          <b-col xl="6" class="col-xl-6">
-            <b-nav  class="nav-footer justify-content-center justify-content-xl-end">
-              <b-nav-item href="https://www.creative-tim.com" target="_blank" >
+          <b-col lg="6">
+            <b-nav align="center" class="nav-footer justify-content-lg-end">
+            <!--
+              <b-nav-item href="https://www.creative-tim.com"  target="_blank">
                 Creative Tim
               </b-nav-item>
-              <b-nav-item href="https://www.creative-tim.com/presentation" target="_blank" >
-                About Us
+              <b-nav-item href="https://www.creative-tim.com/presentation" target="_blank">
+              About Us
               </b-nav-item>
-              <b-nav-item href="http://blog.creative-tim.com"  target="_blank">
+              <b-nav-item href="http://blog.creative-tim.com" target="_blank">
                 Blog
               </b-nav-item>
               <b-nav-item href="https://www.creative-tim.com/license" target="_blank">
                 License
               </b-nav-item>
+              -->
             </b-nav>
           </b-col>
         </b-row>

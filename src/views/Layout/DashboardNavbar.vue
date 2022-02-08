@@ -20,15 +20,6 @@
       <b-form class="navbar-search form-inline mr-sm-3"
               :class="{'navbar-search-dark': type === 'default', 'navbar-search-light': type === 'light'}"
               id="navbar-search-main">
-        <b-form-group class="mb-0">
-          <b-input-group class="input-group-alternative input-group-merge">
-            <b-form-input placeholder="Search" type="text"></b-form-input>
-
-            <div class="input-group-append">
-              <span class="input-group-text"><i class="fas fa-search"></i></span>
-            </div>
-          </b-input-group>
-        </b-form-group>
       </b-form>
       <base-dropdown menu-on-right
                      class="nav-item"
@@ -47,32 +38,40 @@
         </a>
 
         <template>
-
+<!--
           <b-dropdown-header class="noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
+-->
           <b-dropdown-item href="#!">
             <i class="ni ni-single-02"></i>
-            <span>My profile</span>
+            <span>Mi Perfil</span>
           </b-dropdown-item>
-          <b-dropdown-item href="#!">
-            <i class="ni ni-settings-gear-65"></i>
-            <span>Settings</span>
-          </b-dropdown-item>
+          
           <b-dropdown-item href="#!">
             <i class="ni ni-calendar-grid-58"></i>
-            <span>Activity</span>
+            <span>Actividades</span>
           </b-dropdown-item>
-          <b-dropdown-item href="#!">
-            <i class="ni ni-support-16"></i>
-            <span>Support</span>
-          </b-dropdown-item>
-          <div class="dropdown-divider"></div>
+
+           <div class="dropdown-divider"></div>
+
           <b-dropdown-item v-on:click="logOut" href="#!">
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
           </b-dropdown-item>
-
+          <!--
+          <b-dropdown-item href="#!">
+            <i class="ni ni-support-16"></i>
+            <span>Support</span>
+          </b-dropdown-item>
+          
+         
+          
+          <b-dropdown-item href="#!">
+            <i class="ni ni-settings-gear-65"></i>
+            <span>Settings</span>
+          </b-dropdown-item>
+          -->
         </template>
       </base-dropdown>
     </b-navbar-nav>

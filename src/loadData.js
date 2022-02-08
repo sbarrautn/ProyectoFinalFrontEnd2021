@@ -13,12 +13,12 @@ export const startLocalBase = () => {
 const loadData = () => {
   db.collection('students').add({
     id: 1,
-    name: 'Jorge Santillan',
+    name: 'Santiago',
     groupId: 1
   })
   db.collection('students').add({
     id: 2,
-    name: 'Carlos Montana',
+    name: 'Carlos ',
     groupId: 1
   })
   db.collection('students').add({
@@ -28,27 +28,22 @@ const loadData = () => {
   })
   db.collection('students').add({
     id: 3,
-    name: 'Franco Reyes',
+    name: 'Franco',
     groupId: 2
   })
   db.collection('students').add({
     id: 4,
-    name: 'Joaquin Balderrama',
+    name: 'Joaquin',
     groupId: 2
   })
   db.collection('students').add({
     id: 5,
-    name: 'Esequiel Perez',
+    name: 'Jose',
     groupId: 3
   })
   db.collection('students').add({
     id: 6,
-    name: 'Fabian Lopez',
-    groupId: 3
-  })
-  db.collection('students').add({
-    id: 7,
-    name: 'Jose Zapana',
+    name: 'Fabian',
     groupId: 3
   })
   db.collection('groups').add({
