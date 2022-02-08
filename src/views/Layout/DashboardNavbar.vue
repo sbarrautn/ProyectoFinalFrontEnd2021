@@ -57,7 +57,7 @@
 
           <b-dropdown-item v-on:click="logOut" href="#!">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Salir</span>
           </b-dropdown-item>
           <!--
           <b-dropdown-item href="#!">

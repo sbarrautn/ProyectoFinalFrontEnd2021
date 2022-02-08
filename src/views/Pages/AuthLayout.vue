@@ -57,20 +57,19 @@
 
     <footer class="py-5" id="footer-main">
       <b-container >
-        <b-row align-v="center" class="justify-content-lg-between">
-          <b-col lg="30" align-v="center">
-            <div class="copyright text-center text-lg-left text-muted">
+        <div class=" text-center">
             <!-- © {{year}} -->
               <p 
               class="font-weight-bold ml-1" 
               target="_blank"
               style="color:#5d71e2 "
+              
               >
-              Plataforma de Apoyo en el Proceso de Enseñanza-Aprendizaje de los Sistemas del Cuerpo Humano 
+               Apoyo en el Proceso de Enseñanza-Aprendizaje de los Sistemas del Cuerpo Humano 
               </p>
               
             </div>
-          </b-col>
+        <b-row align-v="center" class="justify-content-lg-between">
           <b-col lg="6">
             <b-nav align="center" class="nav-footer justify-content-lg-end">
             <!--

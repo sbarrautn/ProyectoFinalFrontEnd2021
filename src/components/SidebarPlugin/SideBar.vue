@@ -6,10 +6,10 @@
             <navbar-toggle-button @click.native="showSidebar">
                 
             </navbar-toggle-button>
-            <router-link class="navbar-brand" to="/">
+    <!--        <router-link class="navbar-brand" to="/">
                 <img :src="logo" class="navbar-brand-img" alt="...">
             </router-link>
-
+-->
             <slot name="mobile-right">
                 <ul class="nav align-items-center d-md-none">
                     <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
@@ -37,24 +37,17 @@
                         </div>
                         <router-link to="/profile" class="dropdown-item">
                             <i class="ni ni-single-02"></i>
-                            <span>My profile</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-settings-gear-65"></i>
-                            <span>Settings</span>
+                            <span>Mi perfil</span>
                         </router-link>
                         <router-link to="/profile" class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
-                            <span>Activity</span>
+                            <span>Actividades</span>
                         </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-support-16"></i>
-                            <span>Support</span>
-                        </router-link>
+
                         <div class="dropdown-divider"></div>
                         <a href="#!" class="dropdown-item">
                             <i class="ni ni-user-run"></i>
-                            <span>Logout</span>
+                            <span>Salir</span>
                         </a>
                     </base-dropdown>
                 </ul>
@@ -65,10 +58,10 @@
                 <div class="navbar-collapse-header d-md-none">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <router-link to="/">
+ <!--                           <router-link to="/">
                                 <img :src="logo">
                             </router-link>
-                        </div>
+   -->                     </div>
                         <div class="col-6 collapse-close">
                             <navbar-toggle-button @click.native="closeSidebar"></navbar-toggle-button>
                         </div>
