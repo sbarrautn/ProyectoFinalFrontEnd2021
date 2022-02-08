@@ -61,7 +61,8 @@
                 label="Agrergar preguntas"
               >
 
-                <b-form-group label="Agregue una pregunta">
+                <b-form-group label="Agregue una pregunta"
+                class="mb-3">
                   <b-form-input
                     id="inline-form-input-name"
                     class="mb-2 mr-sm-2 mb-sm-0 pr-8"
@@ -72,29 +73,105 @@
                   <b-button
                     variant="primary"
                     @click="addQuestion()"
-                  >Agregar</b-button>                  
+                  >Agregar</b-button>
+                  
+                  <!-- Tipos de respuesta -->                  
                 </b-form-group>
-                  <b-form-group label="Tipo de Pregunta">
-                    <b-form-radio
-                      
+                <b-form-group 
+                 
+                 label="Seleccione el tipo de pregunta">
+                   <b-form-radio
+                      v-model="questionType"
                       :aria-describedby="ariaDescribedby"
                       name="some-radios"
-                      value="1"
+                      value="4"
                       class="mb-2 mr-sm-2 mb-sm-0 pr-8"
-                    >Multople opción</b-form-radio>
+                    >Multople Opción</b-form-radio>
                     <b-form-radio
-                      
+                      v-model="questionType"
                       :aria-describedby="ariaDescribedby"
                       name="some-radios"
-                      value="2"
+                      value="5"
                       class="mb-2 mr-sm-2 mb-sm-0 pr-8"
                     >Verdadero Falso</b-form-radio>
                     <b-form-radio
+                      v-model="questionType"
                       :aria-describedby="ariaDescribedby"
                       name="some-radios"
-                      value="3"
-                      class="mb-2 mr-sm-6 mb-sm-0 pr-8"
-                    >Abierta</b-form-radio>
+                      value="6"
+                      class="mb-2 mr-sm--1 mb-sm-2 pr-8"
+                    >Respuesta Abierta</b-form-radio>
+                  </b-form-group>
+
+                  <!-- Opciones Tipos de respuesta -->
+                 <b-form-group>
+                    <b-form-group label="Opciones:" v-if="questionType==4">
+                      <b-row>
+                        <b-form-input
+                        id="form-input-Opción1"
+                        class="mb-2 mr-sm-2 mb-sm-2 pr-7"
+                        placeholder="Opción 1"                    
+                        ></b-form-input>
+                        <b-form-checkbox
+                        class="mt-2"
+                        >
+                          Respuesta Correcta
+                        </b-form-checkbox>
+                      </b-row>
+
+                      <b-row>
+                        <b-form-input
+                        id="form-input-name-Opción2"
+                        class="mb-2 mr-sm-2 mb-sm-2 pr-7"
+                        placeholder="Opción 2"                    
+                        ></b-form-input>
+                        <b-form-checkbox
+                        class="mt-2"
+                        >
+                          Respuesta Correcta
+                        </b-form-checkbox>
+                      </b-row>
+
+                      <b-row>
+                        <b-form-input
+                        id="form-input-name-Opción-3"
+                        class="mb-2 mr-sm-2 mb-sm-2 pr-7"
+                        placeholder="Opción 3"                    
+                        ></b-form-input>
+                        <b-form-checkbox
+                        class="mt-2"
+                        >
+                          Respuesta Correcta
+                        </b-form-checkbox>
+                      </b-row>
+                    </b-form-group>
+
+                    <b-form-group label="Respuesta" v-if="questionType==5">
+                      <b-form-radio
+                        v-model="questionType"
+                        :aria-describedby="ariaDescribedby"
+                        name="some-radios"
+                        value="Verdadero"
+                        class="mb-2 mr-sm-5 mb-sm-0 pr-8"
+                      >Verdadero</b-form-radio>
+                      <b-form-radio
+                        v-model="questionType"
+                        :aria-describedby="ariaDescribedby"
+                        name="some-radios"
+                        value="Falso"
+                        class="mb-2 mr-sm-6 mb-sm-0 pr-8"
+                      >Falso</b-form-radio>
+                    </b-form-group>
+
+                    <b-form-group label="Respuesta" v-if="questionType==6">
+                      <b-form-input 
+                      id="inline-form-input-name"
+                      class="mb-2 mr-sm-2 mb-sm-0 pr-8"
+                      placeholder="Posible respuesta"                    
+                      ></b-form-input>
+                    </b-form-group>
+
+
                   </b-form-group>
               </b-form>
               <b-list-group class="my-2">
@@ -144,29 +221,6 @@
                 hide-footer
                 :title="item.name"
               >
-                <b-form-group label="Tipo de Actividad">
-                  <b-form-radio
-                    v-model="item.type"
-                    :aria-describedby="ariaDescribedby"
-                    name="some-radios"
-                    value="1"
-                    disabled
-                  >Autoevaluativa</b-form-radio>
-                  <b-form-radio
-                    v-model="item.type"
-                    :aria-describedby="ariaDescribedby"
-                    name="some-radios"
-                    value="2"
-                    disabled
-                  >Cohevaluativa</b-form-radio>
-                  <b-form-radio
-                    v-model="item.type"
-                    :aria-describedby="ariaDescribedby"
-                    name="some-radios"
-                    value="3"
-                    disabled
-                  >Heteroevaluativa</b-form-radio>
-                </b-form-group>
                 <b-form-group label="Preguntas">
                   <b-list-group class="my-2">
                     <b-list-group-item
@@ -211,6 +265,7 @@ export default {
         questions: [],
       },
       question: '',
+      questionType: '',
       studenSelected: [],
       students: [],
       currentPage: 1,
