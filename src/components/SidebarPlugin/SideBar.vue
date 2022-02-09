@@ -12,6 +12,8 @@
 -->
             <slot name="mobile-right">
                 <ul class="nav align-items-center d-md-none">
+
+                  <!--
                     <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
                         <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
@@ -23,6 +25,9 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </base-dropdown>
+
+
+                    -->
                     <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
                         <a slot="title-container" class="nav-link" href="#" role="button">
                             <div class="media align-items-center">
@@ -33,7 +38,7 @@
                         </a>
 
                         <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome!</h6>
+                            <h6 class="text-overflow m-0"></h6>
                         </div>
                         <router-link to="/profile" class="dropdown-item">
                             <i class="ni ni-single-02"></i>
