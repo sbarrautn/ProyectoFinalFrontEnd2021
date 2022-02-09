@@ -99,8 +99,8 @@ export default {
         toDate: '',
       },
       model:{
-        successMsg: 'Cuenta creada correctamente!',
-        conflictMsg: 'Ya existe una cuenta con esa dirección de correo asociada!'
+        successMsg: 'Tarea creada correctamente!',
+        conflictMsg: 'Ya existe una tarea con esa dirección de correo asociada!'
       },
       
     };
@@ -147,7 +147,7 @@ export default {
     }
     if (!session) {
       router.push({name: 'login'});
-    }
+    }    
   }
 };
 </script>
